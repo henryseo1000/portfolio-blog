@@ -30,7 +30,7 @@ const nextConfig = {
         mdxRs: false,
     },
     components: {mermaid: Mermaid, Mermaid},
-    serverExternalPackages: ["@sparticuz/chromium-min", "puppeteer-core"]
+    serverExternalPackages: ["@sparticuz/chromium-min", "puppeteer-core", "pupeteer"]
 };
 
 /**
