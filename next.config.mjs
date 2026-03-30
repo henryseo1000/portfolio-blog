@@ -29,7 +29,8 @@ const nextConfig = {
     experimental: {
         mdxRs: false,
     },
-    components: {mermaid: Mermaid, Mermaid}
+    components: {mermaid: Mermaid, Mermaid},
+    serverExternalPackages: ["@sparticuz/chromium-min", "puppeteer-core"]
 };
 
 /**
