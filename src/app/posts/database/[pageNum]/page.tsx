@@ -1,8 +1,8 @@
 import { getFileNum } from '@/api/search/route';
 import dynamic from 'next/dynamic';
 
-import ArrowLeft from "../../../../../public/svg/arrowLeft.svg?react";
-import ArrowRight from "../../../../../public/svg/arrowRight.svg?react";
+import ArrowLeft from "../../../../../public/svg/arrowLeft.svg";
+import ArrowRight from "../../../../../public/svg/arrowRight.svg";
 
 import './globals.css';
 

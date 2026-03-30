@@ -2,6 +2,7 @@ import AnchorNav from "@/components/posts/AnchorNav";
 import Comments from "@/components/posts/Comments";
 import Navbar from "@/components/posts/Navbar";
 import ProgressBar from "@/components/posts/ProgressBar";
+import { Suspense } from "react";
 
 export default function PageLayout({
   children,
@@ -13,7 +14,9 @@ export default function PageLayout({
       <body className="flex flex-col bg-[#222222]">
         <ProgressBar position="top"/>
         <Navbar/>
-        <AnchorNav/>
+        <Suspense>
+          <AnchorNav/>
+        </Suspense>
         <div className="prose dark:prose-invert">{children}</div>
         <Comments theme="github-dark"/>
       </body>

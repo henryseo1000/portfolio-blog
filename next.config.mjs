@@ -17,16 +17,16 @@ const nextConfig = {
     },
     reactStrictMode: true,
     turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
       },
     },
     experimental: {
         mdxRs: false,
     },
-  },
 };
 
 /**

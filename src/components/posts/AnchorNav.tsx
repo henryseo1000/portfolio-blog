@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ArrowLeft from "../../../public/svg/arrowLeft.svg"
 
 interface Heading {
