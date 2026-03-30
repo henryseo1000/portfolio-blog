@@ -1,5 +1,7 @@
 import createMDX from '@next/mdx';
 import { visit } from "unist-util-visit";
+import mdxMermaid from 'mdx-mermaid';
+import {Mermaid} from 'mdx-mermaid/lib/Mermaid'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -27,6 +29,7 @@ const nextConfig = {
     experimental: {
         mdxRs: false,
     },
+    components: {mermaid: Mermaid, Mermaid}
 };
 
 /**
@@ -57,8 +60,8 @@ const withMDX = createMDX({
     extension: /\.(md|mdx)$/,
     options: {
       // @ts-ignore wrong types
-      remarkPlugins: [["remark-gfm", { strict: true, throwOnError: true }]],
-      rehypePlugins: [['rehype-mermaid'], ['rehype-code-titles'],['rehype-prism-plus']]
+      remarkPlugins: [['mdx-mermaid', {output: 'svg'}], ["remark-gfm", { strict: true, throwOnError: true }]],
+      rehypePlugins: [['rehype-code-titles'],['rehype-prism-plus']]
     },
 });
 
