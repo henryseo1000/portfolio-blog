@@ -39,7 +39,7 @@ export default function Comments ({theme} : CommentsProps) {
                     const scriptElem = document.createElement('script');
                     scriptElem.src = 'https://utteranc.es/client.js';
                     scriptElem.async = true;
-                    scriptElem.setAttribute('repo', 'henryseo1000/henryseo1000.github.io');
+                    scriptElem.setAttribute('repo', 'henryseo1000/portfolio-blog');
                     scriptElem.setAttribute("issue-term", "pathname");
                     scriptElem.setAttribute('theme', theme);
                     scriptElem.setAttribute('label', 'blog-comment');

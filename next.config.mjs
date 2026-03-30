@@ -1,8 +1,5 @@
 import createMDX from '@next/mdx';
 import { visit } from "unist-util-visit";
-import rehypeCodeTitles from 'rehype-code-titles';
-import rehypePrism from 'rehype-prism-plus';
-import rehypeMermaid from 'rehype-mermaid';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -25,6 +22,9 @@ const nextConfig = {
         loaders: ['@svgr/webpack'],
         as: '*.js',
       },
+    },
+    experimental: {
+        mdxRs: false,
     },
   },
 };
@@ -57,7 +57,7 @@ const withMDX = createMDX({
     extension: /\.(md|mdx)$/,
     options: {
       // @ts-ignore wrong types
-      remarkPlugins: [remarkSourceRedirect, ["remark-gfm", { strict: true, throwOnError: true }]],
+      remarkPlugins: [["remark-gfm", { strict: true, throwOnError: true }]],
       rehypePlugins: [['rehype-mermaid'], ['rehype-code-titles'],['rehype-prism-plus']]
     },
 });
