@@ -3,13 +3,10 @@ import { visit } from "unist-util-visit";
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeMermaid from 'rehype-mermaid';
-import { toHtml } from 'hast-util-to-html';
-import { toHast } from 'mdast-util-to-hast';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-    output: 'export',
     basePath: process.env.NODE_ENV === "production" ? "/henryseo1000.github.io" : "",
     assetPrefix : process.env.NODE_ENV === "production" ? "https://henryseo1000.github.io" : "",
     webpack: (config) => {
@@ -21,7 +18,15 @@ const nextConfig = {
 
       return config;
     },
-    reactStrictMode: true
+    reactStrictMode: true,
+    turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
 };
 
 /**
@@ -51,8 +56,9 @@ const remarkSourceRedirect = (options) => {
 const withMDX = createMDX({
     extension: /\.(md|mdx)$/,
     options: {
+      // @ts-ignore wrong types
       remarkPlugins: [remarkSourceRedirect, ["remark-gfm", { strict: true, throwOnError: true }]],
-      rehypePlugins: [rehypeMermaid, rehypeCodeTitles, rehypePrism]
+      rehypePlugins: [['rehype-mermaid'], ['rehype-code-titles'],['rehype-prism-plus']]
     },
 });
 

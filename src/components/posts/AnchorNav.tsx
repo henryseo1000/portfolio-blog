@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import { ReactComponent as ArrowLeft } from "../../../public/svg/arrowLeft.svg"
+import ArrowLeft from "../../../public/svg/arrowLeft.svg"
 
 interface Heading {
     level: number;
@@ -208,6 +208,7 @@ function AnchorNav() {
             href={`#${id}`} 
             scroll={false}
             replace
+            key={id}
           >
             <pre className='w-full text-nowrap text-ellipsis overflow-hidden'>{text}</pre>
           </Link>

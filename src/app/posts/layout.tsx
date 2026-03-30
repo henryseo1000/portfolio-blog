@@ -9,7 +9,7 @@ export default function PageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className="flex flex-col bg-[#222222]">
         <ProgressBar position="top"/>
         <Navbar/>
