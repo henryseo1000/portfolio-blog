@@ -2,6 +2,7 @@ import createMDX from '@next/mdx';
 import { visit } from "unist-util-visit";
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrism from 'rehype-prism-plus';
+import rehypeMermaid from 'rehype-mermaid';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -58,7 +59,7 @@ const withMDX = createMDX({
     extension: /\.(md|mdx)$/,
     options: {
       remarkPlugins: [remarkSourceRedirect, ["remark-gfm", { strict: true, throwOnError: true }]],
-      rehypePlugins: [rehypeCodeTitles, rehypePrism],
+      rehypePlugins: [rehypeMermaid, rehypeCodeTitles, rehypePrism]
     },
 });
 

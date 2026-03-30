@@ -26,7 +26,7 @@ export default function Comments ({theme} : CommentsProps) {
 
     return (
         <div 
-            className="flex w-full border-[0.5px] border-[#4C4C4C] rounded-[20px] bg-[#2A2A2A]"
+            className="flex w-full"
             ref={(elem) => {
                 if (!elem) {
                     return;

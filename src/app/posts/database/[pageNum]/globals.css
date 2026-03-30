@@ -112,3 +112,7 @@ img {
     max-width: 600px;
     border-radius: 10px;
 }
+
+svg[id*="mermaid-"] {
+    width: 100%;
+}
