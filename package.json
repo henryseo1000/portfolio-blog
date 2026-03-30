@@ -16,6 +16,8 @@
     "@svgr/webpack": "^8.1.0",
     "clsx": "^2.1.1",
     "gh-pages": "^6.3.0",
+    "hast-util-to-html": "^9.0.5",
+    "mdast-util-to-hast": "^13.2.1",
     "next": "^14.2.35",
     "next-mdx-remote": "^6.0.0",
     "playwright": "^1.58.2",

@@ -68,6 +68,11 @@ h2 {
     margin-bottom: 10px;
 }
 
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 hr {
     height:1px;
     margin: 10px;
@@ -113,6 +118,21 @@ img {
     border-radius: 10px;
 }
 
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+li ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 svg[id*="mermaid-"] {
+    display: block;
     width: 100%;
+    border-radius: 10px;
+    background-color: #b3b3b3;
 }

@@ -195,7 +195,7 @@ function AnchorNav() {
 
     return (
       <div 
-        className={cn("flex flex-col fixed top-[30px] right-[30px] p-[15px] border-[1px] border-[#4C4C4C] rounded-[10px] bg-[#393939] duration-[1s] z-10 opacity-80 hover:opacity-100", minimize ? 'right-0 rounded-[10px_0px_0px_10px] hover:cursor-pointer' : "")}
+        className={cn("flex flex-col fixed top-[30px] right-[30px] max-w-[200px] p-[15px] border-[1px] border-[#4C4C4C] rounded-[10px] bg-[#393939] duration-[1s] z-10 opacity-80 hover:opacity-100", minimize ? 'right-0 rounded-[10px_0px_0px_10px] hover:cursor-pointer' : "")}
         onClick={() => {
           if(minimize) {
             setMinimize(false);
@@ -209,7 +209,7 @@ function AnchorNav() {
             scroll={false}
             replace
           >
-            <pre>{text}</pre>
+            <pre className='w-full text-nowrap text-ellipsis overflow-hidden'>{text}</pre>
           </Link>
         ))}
         {minimize && <ArrowLeft/>}

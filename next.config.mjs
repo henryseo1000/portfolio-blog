@@ -3,6 +3,8 @@ import { visit } from "unist-util-visit";
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeMermaid from 'rehype-mermaid';
+import { toHtml } from 'hast-util-to-html';
+import { toHast } from 'mdast-util-to-hast';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -43,17 +45,8 @@ const remarkSourceRedirect = (options) => {
         image.url = `${process.env.NODE_ENV === "production" ? "https://henryseo1000.github.io" : ""}/${decodeURIComponent(image.url.split('/')[0])}/${image.url.split('/')[1]}`;
       }
     });
-    // This matches all MDX' <Image /> components & source elements that I'm
-    // using within a custom <Video /> component.
-    // Feel free to update it if you're using a different component name.
-    visit(tree, "mdxJsxFlowElement", (node) => {
-      if (node.name === "Image" || node.name === 'source') {
-        const srcAttr = node.attributes.find((attribute) => attribute.name === "src");
-        srcAttr.value = `${process.env.NODE_ENV === "production" ? "https://henryseo1000.github.io" : ""}/${decodeURIComponent(srcAttr.value.split('/')[0])}/${srcAttr.value.split('/')[1]}`;
-      }})
-    }
+  }
 }
-
 
 const withMDX = createMDX({
     extension: /\.(md|mdx)$/,
