@@ -4,8 +4,8 @@ import { visit } from "unist-util-visit";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-    basePath: process.env.NODE_ENV === "production" ? "/portfolio-blog-seven-beta.vercel.app" : "",
-    assetPrefix : process.env.NODE_ENV === "production" ? "portfolio-blog-seven-beta.vercel.app" : "",
+    // basePath: process.env.NODE_ENV === "production" ? "/portfolio-blog-seven-beta.vercel.app" : "",
+    // assetPrefix : process.env.NODE_ENV === "production" ? "portfolio-blog-seven-beta.vercel.app" : "",
     webpack: (config) => {
       // Add rule for SVG files
       config.module.rules.push({
