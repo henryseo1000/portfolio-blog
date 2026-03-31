@@ -1,6 +1,5 @@
 import createMDX from '@next/mdx';
 import { visit } from "unist-util-visit";
-import {Mermaid} from 'mdx-mermaid/lib/Mermaid'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -27,9 +26,7 @@ const nextConfig = {
     },
     experimental: {
         mdxRs: false,
-    },
-    components: {mermaid: Mermaid, Mermaid},
-    serverExternalPackages: ["@sparticuz/chromium-min", "puppeteer-core", "pupeteer"]
+    }
 };
 
 /**
