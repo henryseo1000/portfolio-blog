@@ -4,8 +4,8 @@ import { visit } from "unist-util-visit";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-    basePath: process.env.NODE_ENV === "production" ? "/henryseo1000.github.io" : "",
-    assetPrefix : process.env.NODE_ENV === "production" ? "https://henryseo1000.github.io" : "",
+    basePath: process.env.NODE_ENV === "production" ? "/portfolio-blog-seven-beta.vercel.app" : "",
+    assetPrefix : process.env.NODE_ENV === "production" ? "portfolio-blog-seven-beta.vercel.app" : "",
     webpack: (config) => {
       // Add rule for SVG files
       config.module.rules.push({
@@ -47,7 +47,7 @@ const remarkSourceRedirect = (options) => {
     visit(tree, "paragraph", (node) => {
       const image = node.children.find((child) => child.type === "image");
       if (image) {
-        image.url = `${process.env.NODE_ENV === "production" ? "https://henryseo1000.github.io" : ""}/${decodeURIComponent(image.url.split('/')[0])}/${image.url.split('/')[1]}`;
+        image.url = `${process.env.NODE_ENV === "production" ? "portfolio-blog-seven-beta.vercel.app" : ""}/${decodeURIComponent(image.url.split('/')[0])}/${image.url.split('/')[1]}`;
       }
     });
   }
