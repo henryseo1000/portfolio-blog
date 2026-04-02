@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import { a, useSpring } from "@react-spring/three";
+import { a } from "@react-spring/three";
 import { Fragment } from "react/jsx-runtime"
 import { useFrame } from "@react-three/fiber";
 import { Group, Object3DEventMap } from "three";
@@ -44,6 +44,10 @@ function Dots() {
         }
     }
 
+    const handleScroll = (e: MouseEvent) => {
+        window
+    }
+
     useFrame(({ clock }) => {
         if (myMesh.current) {
             myMesh.current.rotation.z = clock.elapsedTime * 0.3
@@ -53,8 +57,12 @@ function Dots() {
     useEffect(() => {
         setDots(genDots(350))
         window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('scroll', handleScroll);
 
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('scroll', handleScroll);
+        }
     }, [])
     
     return (

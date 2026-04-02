@@ -32,11 +32,11 @@ function ProgressBar({ position = "top", barColor = "#b3b3b3" } : ProgressBarPro
         document?.addEventListener('scroll', handleBarProgress);
 
         return () => document?.removeEventListener('scroll', handleBarProgress);
-    }, [])
+    }, [barColor])
 
     return (
         <div 
-            className={cn(`left-0 max-w-full border-[1.5px] border-[${barColor}] `, position === "top" ? "fixed top-0" : "absolute bottom-0")}
+            className={cn(`left-0 max-w-full border-[1.5px]`, position === "top" ? "fixed top-0" : "absolute bottom-0", barColor && `border-[#b3b3b3]`)}
             ref={barRef}
         />
     )
