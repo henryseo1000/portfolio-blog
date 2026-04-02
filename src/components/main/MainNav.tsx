@@ -40,7 +40,7 @@ function MainNav() {
     }, [focusedMenu])
 
     return (
-        <div className='fixed top-0 w-full px-[50px] py-[20px]'>
+        <div className='fixed top-0 w-full px-[50px] py-[20px] z-10'>
             <ProgressBar position="bottom"/>
             <div className="flex justify-between">
                 <LogoDark/>
@@ -49,7 +49,7 @@ function MainNav() {
                     {menuList.map((item, index) => {
                         return (
                         <div 
-                            className={cn("flex w-[65px] h-[30px] rounded-[10px] items-center justify-center select-none cursor-pointer duration-200", focusedMenu === index && "bg-white text-[#000000]")}
+                            className={cn("flex w-[65px] h-[30px] rounded-[10px] items-center justify-center select-none cursor-pointer duration-200", focusedMenu === index && "bg-[var(--foreground-rgb)] text-[var(--background-plain)]")}
                             key={index}
                             onClick={() => {
                                 setFocusedMenu(index);
@@ -61,7 +61,7 @@ function MainNav() {
                     })}
                 </div>
 
-                <button className="w-[30px] h-[30px] p-[5px] rounded-[5px] bg-[#ffffff]">
+                <button className="w-[30px] h-[30px] p-[5px] rounded-[5px] bg-[var(--foreground-rgb)]">
                     <Sun />
                 </button>
             </div>

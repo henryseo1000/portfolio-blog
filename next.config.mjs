@@ -26,7 +26,8 @@ const nextConfig = {
     },
     experimental: {
         mdxRs: false,
-    }
+    },
+    transpilePackages: ["three"]
 };
 
 /**
