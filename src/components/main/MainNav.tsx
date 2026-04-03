@@ -9,34 +9,11 @@ import ProgressBar from "../posts/ProgressBar";
 import { useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
 
-interface MenuType {
-    title : string;
-    scroll? : number;
-}
 
-
-function MainNav() {
+function MainNav({ menuList } : any) {
     const [focusedMenu, setFocusedMenu] = useState<number>(0); 
     const [scrollPos, setScrollPos] = useState<number>(0);
     const [change, setChange] = useState<boolean>(false);
-
-    const menuList : MenuType[] = [
-        {
-            title: "Intro"
-        },
-        {
-            title: "About"
-        },
-        {
-            title: "Skills"
-        },
-        {
-            title: "Projects"
-        },
-        {
-            title: "Posts"
-        },
-    ]
 
     const handleScroll = () => {
         setScrollPos(window.scrollY);
@@ -57,7 +34,7 @@ function MainNav() {
     }, [scrollPos])
 
     return (
-        <div className={cn('fixed top-0 w-full px-[50px] py-[20px] z-20 duration-1000', change && "bg-[var(--foreground-rgb)]")}>
+        <div className={cn('fixed top-0 w-full px-[50px] py-[20px] border-b-[rgba(0,0,0,0)] z-20 duration-1000', change && "bg-[var(--foreground-rgb)] border-b-[0.5px] border-b-[var(--border-light)]")}>
             <ProgressBar position="bottom"/>
             <div className="flex items-center justify-between">
                 <LogoDark/>
@@ -71,6 +48,7 @@ function MainNav() {
                             key={index}
                             onClick={() => {
                                 setFocusedMenu(index);
+                                item.ref.current.scrollIntoView({ behavior: 'smooth', block: 'start'});
                             }}
                         >
                             <span className={cn("text-[16px] font-normal", focusedMenu !== index && change && "text-[var(--background-plain)]")}>{item.title}</span>
@@ -79,7 +57,7 @@ function MainNav() {
                     })}
                 </div>
 
-                <button className="flex items-center justify-center w-[30px] h-[30px] border-[1px] border-solid border-[var(--background-plain)] rounded-[5px] bg-[var(--foreground-rgb)]">
+                <button className="flex items-center justify-center w-[30px] h-[30px] border-[0.5px] border-solid border-[var(--background-plain)] rounded-[5px] bg-[var(--foreground-rgb)]">
                     <Sun />
                 </button>
             </div>
