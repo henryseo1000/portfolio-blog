@@ -1,7 +1,7 @@
 import { SkillTypes } from '@/types/skillTypes';
 import SkillArrow from '../../../../public/svg/skillArrow.svg'
 
-function SkillCards({name, skill_level, svg, description} : SkillTypes) {
+function SkillCards({name, skill_level, svg, description, onClick} : SkillTypes) {
 
     const generateTag = () => {
 
@@ -18,7 +18,10 @@ function SkillCards({name, skill_level, svg, description} : SkillTypes) {
     }
 
     return (
-        <div className='flex justify-between w-[240px] h-[160px] px-[20px] py-[10px] border-[0.5px_solid_var(--border-light)] rounded-[10px] bg-[var(--foreground-rgb)] select-none cursor-pointer'>
+        <div 
+            className='flex justify-between w-[240px] h-[160px] px-[20px] py-[10px] border-[0.5px_solid_var(--border-light)] rounded-[10px] bg-[var(--foreground-rgb)] select-none cursor-pointer'
+            onClick={onClick ? onClick : () => {}}
+        >
             <div className='flex flex-col justify-center gap-[5px]'>
                 <div className='flex items-center gap-[5px]'>
                     {svg}

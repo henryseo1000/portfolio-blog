@@ -33,14 +33,14 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
           className='flex gap-[15px] text-[48px] font-extrabold'
           data-aos="fade-right"
         >
-          <p className=''>About</p>
+          <p>About</p>
           <p className='text-[rgba(0,0,0,0)] [-webkit-text-stroke:1px_var(--foreground-rgb)]'>Me</p>
         </div>
 
         <div data-aos="fade-top" className='flex w-full h-full items-center justify-between'>
           <div className='flex flex-col items-center justify-center w-full h-full gap-[30px]'>
             <img 
-              className='max-w-[300px] border-[0.5px] border-[var(--foreground-rgb)] rounded-[150px]'
+              className='max-w-[300px] rounded-[10px]'
               src="/profile_1.jpg"
               alt="profile_1"
             />
@@ -50,7 +50,7 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
                 buttonList.map((item, index) => {
                   return(
                     <button 
-                      className="p-[10px] rounded-[10px] bg-[var(--foreground-rgb)]"
+                      className="p-[10px] rounded-[10px] bg-[var(--foreground-rgb)] duration-200 hover:opacity-70"
                       onClick={() => item.onClick()}
                       key={index}
                     >
@@ -71,7 +71,7 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
                 언젠가 혁신적인 아이디어로 세상을 바꿀 수 있는 무언가를 만드는 것이 꿈입니다.
               </p>
               <button 
-                className='flex items-center max-w-[180px] px-[15px] py-[10px] gap-[15px] border-[1px] border-[var(--foreground-rgb)] rounded-[10px]'
+                className='flex items-center max-w-[180px] px-[15px] py-[10px] gap-[15px] border-[1px] border-[var(--foreground-rgb)] rounded-[10px] hover:bg-[rgba(255,255,255,0.2)]'
                 onClick={() => {
                   router.push('/about')
                 }}
