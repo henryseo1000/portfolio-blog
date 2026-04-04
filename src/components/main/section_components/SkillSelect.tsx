@@ -1,4 +1,4 @@
-import React from 'react'
+import { SkillTypes } from "@/types/skillTypes";
 
 function SkillSelect() {
   return (
