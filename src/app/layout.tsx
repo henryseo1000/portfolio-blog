@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Dots",
   description: "Blog Made By Hojun Seo",
+  icons: {
+    icon: "/logo_dark.svg"
+  }
 };
 
 export default function RootLayout({

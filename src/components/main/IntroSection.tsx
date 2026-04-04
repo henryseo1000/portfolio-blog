@@ -6,6 +6,8 @@ import {
 } from "@react-three/drei";
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
+import ScrollDownArrow from "../../../public/svg/scrollDown.svg";
+
 import Dots from './Dots';
 
 function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
@@ -15,16 +17,13 @@ function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const [changedText, setChangedText] = useState<boolean>(false);
 
   const generateKeyframes = () => {
-    if (input.trim() === "") {
-      alert("공백 없이 한 글자 이상 입력해주세요!");
-      return
-    }
-
     const keyArr = [];
     let duration = 0;
 
-    jobs.splice(jobs.length - 1, 1, input);
-    jobs.push(jobs[0]);
+    if (input.trim() !== "") {
+      jobs.splice(jobs.length - 1, 1, input);
+      jobs.push(jobs[0]);
+    }
 
     if (jobsref.current) {
       const offsetDiff = 1.0 / jobs.length;
@@ -56,7 +55,7 @@ function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
           keyArr.push({ transform: `translateY(-${index * 100}%)`, offset: currentOffset})
         }
 
-        duration += 1000;
+        duration += 1500;
       })
 
       jobsref.current.animate(
@@ -66,45 +65,16 @@ function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
           iterations: Infinity
         }
       )
-
-      console.log(keyArr);
     }
 
     setChangedText(!changedText);
+    setInput("");
   }
   
   useEffect(() => {
-    if (input !== "") {
+    if (jobsref.current) {
       generateKeyframes();
-    }
-    else {
-      if (jobsref.current) {
-        jobsref.current.animate([
-          // 2/5, 1/5, 2/5
-          { transform: "translateY(0%)", offset: 0 },
-
-          { transform: "translateY(-105%)", offset: 0.1 },
-          { transform: "translateY(-95%)", offset: 0.15 },
-          { transform: "translateY(-100%)", offset: 0.25 },
-
-          { transform: "translateY(-205%)", offset: 0.35 },
-          { transform: "translateY(-195%)", offset: 0.40 },
-          { transform: "translateY(-200%)", offset: 0.50 },
-
-          { transform: "translateY(-305%)", offset: 0.60 },
-          { transform: "translateY(-295%)", offset: 0.65 },
-          { transform: "translateY(-300%)", offset: 0.75 },
-
-          { transform: "translateY(-405%)", offset: 0.85 },
-          { transform: "translateY(-395%)", offset: 0.90 },
-          { transform: "translateY(-400%)", offset: 1 },
-        ],
-        {
-          duration: 5000,
-          iterations: Infinity
-        })
-      }
-    }
+     }
   }, [jobs]);
 
   return (
@@ -124,7 +94,7 @@ function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
                 {
                   jobs.map((item, index) => {
                     return (
-                      <span className='block max-w-[500px] h-full text-[rgba(0,0,0,0)] [-webkit-text-stroke:1px_var(--foreground-rgb)]' key={index}>{item}</span>
+                      <span className='block max-w-[400px] h-full text-[rgba(0,0,0,0)] overflow-hidden text-ellipsis [-webkit-text-stroke:1px_var(--foreground-rgb)]' key={index}>{item}</span>
                     )
                   })
                 }
@@ -142,12 +112,22 @@ function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
             <button
               className='flex items-center justify-center w-[70px] h-[40px] p-[15px] text-[14px] border-[1px] border-solid border-[var(--foreground-rgb)] rounded-[20px] bg-[var(--background-basic)] hover:bg-[var(--background-basic-light)]'
               onClick={() => {
-                generateKeyframes();
+                if (input.trim() === "") {
+                  alert("공백 없이 한 글자 이상 입력해주세요!");
+                }
+                else {
+                  generateKeyframes();
+                }
               }}  
             >
               Add
             </button>
           </div>
+        </div>
+
+        <div className='flex flex-col absolute items-center left-[50%] bottom-[40px] gap-[10px] text-[var(--border-light-dark)] select-none transform-[translateX(-50%)] animate-[scrollDown_2s_infinite]'>
+            <p className='text-[12px] font-extralight'>Scroll</p>
+            <ScrollDownArrow />
         </div>
     </div>
   )

@@ -46,3 +46,11 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes scrollDown {
+  50% {
+    opacity: 0.2;
+    transform: translateX(-50%);
+    transform: translateY(-50px);
+  }
+}

@@ -1,3 +1,5 @@
 export default function Projects() {
-    return <></>
+    return <div>
+        This is Projects Page
+    </div>
 }
