@@ -1,16 +1,15 @@
 "use client";
 
 import LogoDark from '../../../public/logo_dark.svg';
-import LogoLight from '../../../public/logo_light.svg';
 import Sun from '../../../public/svg/sun.svg';
 
 import ProgressBar from "../posts/ProgressBar";
 
 import { useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
+import NavProps from '@/types/navTypes';
 
-
-function MainNav({ menuList } : any) {
+function MainNav({ menuList } : { menuList : NavProps[]}) {
     const [focusedMenu, setFocusedMenu] = useState<number>(0); 
     const [scrollPos, setScrollPos] = useState<number>(0);
     const [change, setChange] = useState<boolean>(false);
@@ -41,19 +40,24 @@ function MainNav({ menuList } : any) {
 
                 <div className="flex px-[15px] py-[5px] gap-[40px]">
                     {menuList.map((item, index) => {
-                        return (
-                        <div 
-                            className={cn("flex min-w-[70px] h-[30px] rounded-[10px] items-center justify-center select-none cursor-pointer duration-200", 
-                                focusedMenu === index && (change ? " text-[var(--foreground-rgb)] bg-[var(--background-plain)]" : " bg-[var(--foreground-rgb)] text-[var(--background-plain)]"))}
-                            key={index}
-                            onClick={() => {
-                                setFocusedMenu(index);
-                                item.ref.current.scrollIntoView({ behavior: 'smooth', block: 'start'});
-                            }}
-                        >
-                            <span className={cn("text-[16px] font-normal", focusedMenu !== index && change && "text-[var(--background-plain)]")}>{item.title}</span>
-                        </div>
-                    )
+                        if (item?.isVisible === false) {
+                            return <div key={index} className='hidden'/>
+                        }
+                        else {
+                            return (
+                                <div 
+                                    className={cn("flex min-w-[70px] h-[30px] rounded-[10px] items-center justify-center select-none cursor-pointer duration-200", 
+                                        focusedMenu === index && (change ? " text-[var(--foreground-rgb)] bg-[var(--background-plain)]" : " bg-[var(--foreground-rgb)] text-[var(--background-plain)]"))}
+                                    key={index}
+                                    onClick={() => {
+                                        setFocusedMenu(index);
+                                        item.ref.current.scrollIntoView({ behavior: 'smooth', block: 'start'});
+                                    }}
+                                >
+                                    <span className={cn("text-[16px] font-normal", focusedMenu !== index && change && "text-[var(--background-plain)]")}>{item.title}</span>
+                                </div>
+                            )
+                        }
                     })}
                 </div>
 

@@ -1,8 +1,8 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
 import SkillSelect from './section_components/SkillSelect';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-import { Autoplay } from 'swiper/modules'; 
+import { Autoplay, Pagination } from 'swiper/modules'; 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -83,9 +83,14 @@ function SkillSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
         className='flex w-[70%]'
       >
         <Swiper
+          style={{
+            
+          }}
           slidesPerView={1}
           pagination ={{clickable: true}}
-          autoplay={true}
+          autoplay={{
+            disableOnInteraction: false,
+          }}
           speed={1500}
         >
           {skillPages().map((item, index) => {
@@ -111,7 +116,7 @@ function SkillSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
       >
         <div className='flex gap-[15px] select-none'>
           <p className='text-[48px] font-extrabold'>My</p>
-          <p className='text-[48px] font-extrabold [-webkit-text-stroke:1px_var(--foreground-rgb)]'>Skills</p>
+          <p className='text-[48px] text-[rgba(0,0,0,0)] font-extrabold [-webkit-text-stroke:1px_var(--foreground-rgb)]'>Skills</p>
         </div>
 
         <SkillSelect 

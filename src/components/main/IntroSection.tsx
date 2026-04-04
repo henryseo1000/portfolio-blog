@@ -7,8 +7,9 @@ import {
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import ScrollDownArrow from "../../../public/svg/scrollDown.svg";
+import Dots from './section_components/Dots';
 
-import Dots from './Dots';
+
 
 function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const [jobs, setjobs] = useState<string[]>(['a Designer', 'an Artist', 'FE Engineer', "BE Engineer", 'a Designer']);
