@@ -16,7 +16,7 @@ p {
     white-space: pre-wrap;
 }
 
-h1 + p {
+.default_fronts:not(h1) {
     /* padding: 10px; */
     /* border: 1px solid #333333; */
     /* border-radius: 10px; */

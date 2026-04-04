@@ -4,6 +4,8 @@ import Navbar from "@/components/posts/Navbar";
 import ProgressBar from "@/components/posts/ProgressBar";
 import { Suspense } from "react";
 
+import "./globals.css"
+
 export default function PageLayout({
   children,
 }: Readonly<{
@@ -11,7 +13,7 @@ export default function PageLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="flex flex-col bg-[#222222]">
+      <body>
         <ProgressBar position="top"/>
         <Navbar/>
         <Suspense>
