@@ -66,15 +66,15 @@ export default function Navbar ({
                 {
                     postCategoryList.map((item, index) => {
                         return (
-                            <div 
+                            <a 
                                 key={index}
                                 className={cn("flex items-center px-[25px] py-[20px] gap-[15px] duration-300 cursor-pointer select-none hover:bg-[var(--border-light-dark)]", 
                                     focused === index && "bg-[var(--border-light-dark)]",
                                     isMinimized && "justify-center h-[330px] px-0"
                                 )}
+                                href={`/posts/${item.path}`}
                                 onClick={() => {
                                     setFocused(index)
-                                    router.replace(`/posts/${item.path}`);
                                 }}
                             >   
                                 {item.icon}
@@ -83,7 +83,7 @@ export default function Navbar ({
                                         {item.title}
                                     </p>
                                 }
-                            </div>
+                            </a>
                         )
                     })
                 }
