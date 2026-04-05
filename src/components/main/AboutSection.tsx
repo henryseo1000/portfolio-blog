@@ -5,6 +5,7 @@ import Github from "../../../public/svg/github.svg";
 import Instagram from "../../../public/svg/instagram.svg";
 import ArrowRightCircle from "../../../public/svg/arrowRightCircle.svg";
 import { useRouter } from 'next/navigation';
+import MainButton from './section_components/MainButton';
 
 function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const router = useRouter();
@@ -39,7 +40,7 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
 
         <div data-aos="fade-top" className='flex w-full h-full items-center justify-between'>
           <div className='flex flex-col items-center justify-center w-full h-full gap-[30px]'>
-            <img 
+            <img
               className='max-w-[300px] rounded-[10px]'
               src="/profile_1.jpg"
               alt="profile_1"
@@ -70,15 +71,13 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
                 저는 호기심이 많고, 알아갈 수 있는 것이 있으면 뭐든지 재미있고, 흥미있게 관심을 가집니다.<br/>
                 언젠가 혁신적인 아이디어로 세상을 바꿀 수 있는 무언가를 만드는 것이 꿈입니다.
               </p>
-              <button 
-                className='flex items-center max-w-[180px] px-[15px] py-[10px] gap-[15px] border-[1px] border-[var(--foreground-rgb)] rounded-[10px] hover:bg-[rgba(255,255,255,0.2)]'
+              <MainButton 
+                text={"About me"} 
                 onClick={() => {
-                  router.push('/about')
+                  router.push("about")
                 }}
-              >
-                <span className='text-[16px] font-light'>More about me</span>
-                <ArrowRightCircle/>
-              </button>
+                style='opacity-30 hover:opacity-100'
+              />
           </div>
         </div>
     </div>

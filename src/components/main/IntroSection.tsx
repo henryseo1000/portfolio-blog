@@ -56,7 +56,7 @@ function IntroSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
           keyArr.push({ transform: `translateY(-${index * 100}%)`, offset: currentOffset})
         }
 
-        duration += 1500;
+        duration += 1000;
       })
 
       jobsref.current.animate(

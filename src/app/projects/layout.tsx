@@ -6,8 +6,6 @@ export default function ProjectsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body>{children}</body>
-    </html>
+    <section>{children}</section>
   );
 }

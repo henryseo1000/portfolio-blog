@@ -20,11 +20,11 @@ export default async function PageNum({props} : any) {
                 (Test2.frontmatter[keyArr[i]] as Array<any>)?.length !== 0
             ) {
                 switch (keyArr[i]) {
-                case "URL/자료":
+                case "URL":
                     buf.push(
                         <p key={i} className='default_fronts urls'>
                             URL/자료:
-                            {(Test2.frontmatter["URL/자료"] as Array<any>)?.map((item, index) => {
+                            {(Test2.frontmatter["URL"] as Array<any>)?.map((item, index) => {
                                 return (
                                     <a href={`${item}`} key={index}>{item}</a>
                                 )
@@ -33,7 +33,7 @@ export default async function PageNum({props} : any) {
                     )
                     break;
 
-                case "계획" :
+                case "Name" :
                     buf = [<h1 key={i} className='default_fronts title'>{Test2.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
                     break;
 

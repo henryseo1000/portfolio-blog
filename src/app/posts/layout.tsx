@@ -12,8 +12,7 @@ export default function PageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body>
+      <section>
         <ProgressBar position="top"/>
         <Navbar/>
         <Suspense>
@@ -21,7 +20,6 @@ export default function PageLayout({
         </Suspense>
         <div className="prose dark:prose-invert">{children}</div>
         <Comments theme="github-dark"/>
-      </body>
-    </html>
+      </section>
   );
 }

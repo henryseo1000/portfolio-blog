@@ -56,7 +56,5 @@ export async function notionToMarkdown() {
         },
     });
 
-    console.log("front", frontmatter)
-
     return {content, frontmatter}
 }
