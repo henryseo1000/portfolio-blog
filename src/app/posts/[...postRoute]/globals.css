@@ -3,6 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-basic);
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    background-color: #222222;
+    transition-duration: 0.5s;
+}
+
 p {
     white-space: pre-wrap;
 }
@@ -42,10 +57,10 @@ p:has(img) {
 }
 
 blockquote {
-    padding: 5px 0px 5px 20px;
+    padding: 10px 10px 15px 20px;
     font-weight: bold;
-    border-left: 5px solid#ffffff;
-    background-color: rgba(255, 255, 255, 0.2);
+    border-left: 5px solid #4e4e4e;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 h1 {

@@ -79,7 +79,7 @@ export default function Navbar ({
                 }
             </div>
 
-            <div className="flex flex-col relative items-center justify-center bottom-0 pt-[35px] gap-[20px]">
+            <div className="flex flex-col relative items-center justify-center pt-[35px] gap-[20px]">
                 <button
                     className="px-[15px] py-[10px] rounded-[20px] bg-[var(--border-light-dark)]"
                     onClick={() => {

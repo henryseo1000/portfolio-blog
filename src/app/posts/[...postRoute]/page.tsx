@@ -1,10 +1,12 @@
-import { notionToMarkdown, notionToPage } from '@/api/search/route';
+import { notionToPage } from '@/api/search/route';
 
 import ArrowLeft from "../../../../public/svg/arrowLeft.svg";
 import ArrowRight from "../../../../public/svg/arrowRight.svg";
 
 import './globals.css';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { cn } from '@/utils/cn';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -21,12 +23,12 @@ export default async function BlogPost({ params }) {
                     source.frontmatter[keyArr[i]] !== null &&
                     (source.frontmatter[keyArr[i]] as Array<any>)?.length !== 0
                 ) {
-                    switch (keyArr[i]) {
-                    case "URL":
+                    switch (true) {
+                    case "URL" === keyArr[i] || "파일과 미디어" === keyArr[i]:
                         buf.push(
                             <p key={i} className='default_fronts urls'>
-                                URL/자료:
-                                {(source.frontmatter["URL"] as Array<any>)?.map((item, index) => {
+                                {keyArr[i]} :
+                                {(source.frontmatter[keyArr[i]] as Array<any>)?.map((item, index) => {
                                     return (
                                         <a href={`${item}`} key={index}>{item}</a>
                                     )
@@ -35,20 +37,25 @@ export default async function BlogPost({ params }) {
                         )
                         break;
 
-                    case "Name" :
+                    case "Name" === keyArr[i] ||  "이름" === keyArr[i]:
                         buf = [<h1 key={i} className='default_fronts title'>{source.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
                         break;
 
-                    case "Assign" :
+                    case "Assign" === keyArr[i]:
                         buf.push(<p key={i} className='default_fronts title'>작성자: {source.frontmatter[keyArr[i]] as string}</p>)
                         break;
 
-                    case "Tags" :
+                    case "Tags" === keyArr[i] || "태그" === keyArr[i]:
                         buf.push(
                             <div key={i} className='default_fronts tags flex gap-[5px]'>
-                                태그: {(source.frontmatter.Tags as Array<any>).map((item, index) => {
+                                태그: {(source.frontmatter.Tags as Array<any>)?.map((item, index) => {
                                     return (
-                                        <p key={index}>{item}</p>
+                                        <p 
+                                            className='px-[5px] border-[0.5px] border-[var(--foreground-rgb)] rounded-[10px]'
+                                            key={index}
+                                        >
+                                            {item}
+                                        </p>
                                     )
                                 })}
                             </div>
@@ -69,45 +76,70 @@ export default async function BlogPost({ params }) {
         else {
             return [];
         }
-        
+    }
+
+    if ((isNaN(slug.postRoute[1]) && slug.postRoute[1] !== undefined) ||
+        (slug.postRoute[1] && source?.content === undefined)
+    ) {
+        return redirect(`/posts/${slug.postRoute[0]}`)
     }
 
     return (
         <div className='flex flex-col gap-[15px]'>
-            <div className='flex flex-col px-[40px] pt-[70px] pb-[45px] gap-[10px] border-[#4c4c4c] border-[0.5px] rounded-[20px] bg-[#2A2A2A]'>
+            <div className={cn('flex flex-col px-[40px] pt-[70px] pb-[45px] gap-[10px] border-[#4c4c4c] border-[0.5px] rounded-[20px] bg-[#2A2A2A]', source?.content === undefined && "h-[calc(100vh_-_30px)]")}>
                 <div className='flex flex-col mb-[30px] gap-[5px]'>
                     {source?.content && getKeysAndConvert()?.map((item, index) => {
                         return item
                     })}
                 </div>
-                {source?.content ? source.content : "포스트가 없습니다."}
+                { source?.content ? 
+                    source.content 
+                    : 
+                    <p className='w-full pb-[45px] text-center text-[#4c4c4c]'>포스트가 없습니다</p>
+                }
             </div>
+            {  source?.content &&
 
-            <div className='flex justify-between w-full h-[80px] gap-[15px]'>
-                <Link
-                    className='flex items-center justify-between w-[250px] h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px] cursor-pointer'
-                    href={`${Number(slug.postRoute[1]) - 1}`}
-                >
-                    <ArrowLeft className='h-[20px]'/>
-                    <div className='flex flex-col gap-[5px] text-right'>
-                        <p className='text-[#B3B3B3] text-[13px] font-bold'>이전 글</p>
-                        <p className='text-[#B3B3B3] text-[13px] font-light'>이전 글 제목이 들어갈 부분</p>
-                    </div>
-                </Link>
-                {/* <div className='flex items-center justify-between grow h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px]'>
+                <div className='flex justify-between w-full h-[80px] gap-[15px]'>
+                    <Link
+                        className={cn('flex items-center justify-between w-[250px] h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px] cursor-pointer', 
+                            (Number(slug.postRoute[1]) === 1) && "pointer-events-none cursor-default opacity-45")}
+                        href={`${Number(slug.postRoute[1]) - 1}`}
+                    >
+                        <ArrowLeft className='h-[20px]'/>
+                        {   Number(slug.postRoute[1]) !== 1 ?
+                            <div className='flex flex-col gap-[5px] text-right'>
+                                <p className='text-[#B3B3B3] text-[13px] font-bold'>이전 글</p>
+                                <p className='text-[#B3B3B3] text-[13px] font-light'>이전 글 제목이 들어갈 부분</p>
+                            </div>
+                            :
+                            <div className='flex flex-col gap-[5px] text-right'>
+                                <p className='text-[#B3B3B3] text-[13px] font-light'>첫 글입니다</p>
+                            </div>
+                        }
+                    </Link>
 
-                </div> */}
-                <Link
-                    className='flex items-center justify-between w-[250px] h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px] cursor-pointer'
-                    href={`${Number(slug.postRoute[1]) + 1}`}
-                >
-                    <div className='flex flex-col gap-[5px]'>
-                        <p className='text-[#B3B3B3] text-[13px] font-bold'>다음 글</p>
-                        <p className='text-[#B3B3B3] text-[13px] font-light'>다음 글 제목이 들어갈 부분</p>
-                    </div>
-                    <ArrowRight className='h-[20px]'/>
-                </Link>
-            </div>
+                    
+                    <Link
+                        className={cn('flex items-center justify-between w-[250px] h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px] cursor-pointer', 
+                            source?.totalNum === Number(slug.postRoute[1]) && "pointer-events-none cursor-default opacity-45")}
+                        href={`${Number(slug.postRoute[1]) + 1}`}
+                    >   
+                        {!(source?.totalNum === Number(slug.postRoute[1])) ?
+                            <div className='flex flex-col gap-[5px]'>
+                                <p className='text-[#B3B3B3] text-[13px] font-bold'>다음 글</p>
+                                <p className='text-[#B3B3B3] text-[13px] font-light'>다음 글 제목이 들어갈 부분</p>
+                            </div>
+                            :
+                            <div className='flex flex-col gap-[5px]'>
+                                <p className='text-[#B3B3B3] text-[13px] font-light'>마지막 글입니다</p>
+                            </div>
+                        }
+                        <ArrowRight className='h-[20px]'/>
+                    </Link>
+                    
+                </div>
+            }
         </div>
     )
 }

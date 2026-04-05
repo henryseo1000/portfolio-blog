@@ -38,10 +38,10 @@ function AnchorNav() {
           element.setAttribute('id', id);
 
           if (Number(element.localName.slice(1)) === 2) {
-            innerText = ' • ' + element.innerText;
+            innerText = ' ' + element.innerText;
           }
           else if (Number(element.localName.slice(1)) === 3) {
-            innerText = '  - ' + element.innerText;
+            innerText = '  ' + element.innerText;
           }
           else {
             innerText = element.innerText;
@@ -100,15 +100,15 @@ function AnchorNav() {
       });
     };
 
-    const handleOut = (e : MouseEvent) => {
+    const handleOut = () => {
       const id = setTimeout(() => {
         setMinimize(true);
-      }, 5000);
+      }, 4000);
 
       timerId.push(id);
     }
 
-    const handleIn = (e : MouseEvent) => {      
+    const handleIn = () => {      
       clearAllTimeouts();
     }
     
@@ -178,11 +178,8 @@ function AnchorNav() {
     }, [searchParams]);
 
     useEffect(() => {
-      const id = setTimeout(() => {
-        setMinimize(true);
-      }, 5000);
-
-      timerId.push(id);
+      
+      handleOut();
 
       anchorRef?.current?.addEventListener('mousemove', handleIn);
       anchorRef?.current?.addEventListener('mouseleave', handleOut);
@@ -191,11 +188,15 @@ function AnchorNav() {
         anchorRef?.current?.removeEventListener('mousemove', handleIn);
         anchorRef?.current?.removeEventListener('mouseleave', handleOut);
       }
-    },[])
+    },[ minimize ])
+
+    if (!headings || headings.length === 0) {
+      return <></>
+    }
 
     return (
       <div 
-        className={cn("flex flex-col fixed top-[30px] right-[30px] max-w-[200px] p-[15px] border-[1px] border-[#4C4C4C] rounded-[10px] bg-[#393939] duration-[1s] z-10 opacity-80 hover:opacity-100", minimize ? 'right-0 rounded-[10px_0px_0px_10px] hover:cursor-pointer' : "")}
+        className={cn("flex flex-col fixed top-[30px] right-[30px] max-w-[200px] p-[15px] border-[1px] border-[#4C4C4C] rounded-[10px] bg-[#393939] duration-200 z-10 opacity-80 hover:opacity-100", minimize ? 'right-0 rounded-[10px_0px_0px_10px] hover:cursor-pointer' : "")}
         onClick={() => {
           if(minimize) {
             setMinimize(false);
