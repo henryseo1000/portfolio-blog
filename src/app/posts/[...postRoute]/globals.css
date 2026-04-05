@@ -3,15 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-section {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
-    padding-left: 280px;
-    background-color: #222222;
-}
-
 p {
     white-space: pre-wrap;
 }

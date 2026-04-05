@@ -1,30 +1,29 @@
-import { getMarkdown, notionToMarkdown } from '@/api/search/route';
+import { notionToMarkdown } from '@/api/search/route';
 
-import ArrowLeft from "../../../../../public/svg/arrowLeft.svg";
-import ArrowRight from "../../../../../public/svg/arrowRight.svg";
+import ArrowLeft from "../../../../public/svg/arrowLeft.svg";
+import ArrowRight from "../../../../public/svg/arrowRight.svg";
 
 import './globals.css';
 
-export default async function PageNum({props} : any) {
-    const Test = await getMarkdown();
-    const Test2 = await notionToMarkdown();
+export default async function PageNum({ params }) {
+    const source = await notionToMarkdown();
 
     const getKeysAndConvert = () => {
-        const keyArr = Object.keys(Test2.frontmatter);
+        const keyArr = Object.keys(source.frontmatter);
         const len = keyArr?.length;
         let buf = [];
         
         for (let i = 0; i < len; i++) {
-            if(Test2.frontmatter[keyArr[i]] !== "" &&
-                Test2.frontmatter[keyArr[i]] !== null &&
-                (Test2.frontmatter[keyArr[i]] as Array<any>)?.length !== 0
+            if(source.frontmatter[keyArr[i]] !== "" &&
+                source.frontmatter[keyArr[i]] !== null &&
+                (source.frontmatter[keyArr[i]] as Array<any>)?.length !== 0
             ) {
                 switch (keyArr[i]) {
                 case "URL":
                     buf.push(
                         <p key={i} className='default_fronts urls'>
                             URL/자료:
-                            {(Test2.frontmatter["URL"] as Array<any>)?.map((item, index) => {
+                            {(source.frontmatter["URL"] as Array<any>)?.map((item, index) => {
                                 return (
                                     <a href={`${item}`} key={index}>{item}</a>
                                 )
@@ -34,17 +33,17 @@ export default async function PageNum({props} : any) {
                     break;
 
                 case "Name" :
-                    buf = [<h1 key={i} className='default_fronts title'>{Test2.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
+                    buf = [<h1 key={i} className='default_fronts title'>{source.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
                     break;
 
                 case "Assign" :
-                    buf.push(<p key={i} className='default_fronts title'>작성자: {Test2.frontmatter[keyArr[i]] as string}</p>)
+                    buf.push(<p key={i} className='default_fronts title'>작성자: {source.frontmatter[keyArr[i]] as string}</p>)
                     break;
 
                 case "Tags" :
                     buf.push(
                         <div key={i} className='default_fronts tags flex gap-[5px]'>
-                            태그: {(Test2.frontmatter.Tags as Array<any>).map((item, index) => {
+                            태그: {(source.frontmatter.Tags as Array<any>).map((item, index) => {
                                 return (
                                     <p key={index}>{item}</p>
                                 )
@@ -55,7 +54,7 @@ export default async function PageNum({props} : any) {
                 default:
                     buf.push(
                         <p key={i} className='default_fronts'>
-                            {keyArr[i]}: {Test2.frontmatter[keyArr[i]] as string}
+                            {keyArr[i]}: {source.frontmatter[keyArr[i]] as string}
                         </p>
                     )
             }
@@ -73,7 +72,7 @@ export default async function PageNum({props} : any) {
                         return item
                     })}
                 </div>
-                {Test2.content}
+                {source.content}
             </div>
 
             <div className='flex justify-between w-full h-[80px] gap-[15px]'>

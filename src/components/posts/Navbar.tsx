@@ -4,10 +4,17 @@ import profileData from "@/data/profile";
 import GithubLogo from "../../../public/svg/github-smaller.svg";
 import { usePathname, useRouter } from "next/navigation";
 import { postCategoryList } from "@/data/postCategory";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
 
-export default function Navbar ({ isMinimized } : { isMinimized? : boolean }) {
+export default function Navbar ({ 
+        isMinimized, 
+        setIsMinimized 
+    } : 
+    { isMinimized? : boolean, 
+        setIsMinimized: Dispatch<SetStateAction<boolean>> 
+}) {
+    
     const router = useRouter();
     const [focused, setFocused] = useState<number>();
     const location = usePathname();
@@ -26,7 +33,7 @@ export default function Navbar ({ isMinimized } : { isMinimized? : boolean }) {
     }, [location])
 
     return (
-        <nav className="flex flex-col fixed left-[15px] w-[250px] h-[calc(100%-30px)] gap-[5px] rounded-[20px] border-[#4C4C4C] border-[1px] bg-[#393939]">
+        <nav className={cn("flex flex-col fixed left-[15px] w-[250px] h-[calc(100%-30px)] gap-[5px] rounded-[20px] border-[#4C4C4C] border-[1px] bg-[#393939] duration-500 overflow-hidden", isMinimized && "w-[180px]")}>
             <div className="flex flex-col items-center justify-center px-[30px] pt-[40px] pb-[20px] gap-[10px] border-b-[1px] border-solid border-b-[var(--border-light-dark)]">
                 <img 
                     className="w-[50%] aspect-square border-[1px] border-solid border-[var(--border-light-dark)] rounded-[50%] object-cover object-top"
@@ -83,6 +90,9 @@ export default function Navbar ({ isMinimized } : { isMinimized? : boolean }) {
                 </button>
                 <div 
                     className="relative w-[80px] h-[4px] rounded-[2px] bg-[var(--border-light)] duration-1000 cursor-pointer hover:scale-[1.1]"
+                    onClick={() => {
+                        setIsMinimized(!isMinimized)
+                    }}
                 />
             </div>
         </nav>
