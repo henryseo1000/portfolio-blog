@@ -1,4 +1,3 @@
-import { length } from './../../../node_modules/@types/three/src/Three.TSL.d';
 import fs from "fs";
 import path from "path";
 

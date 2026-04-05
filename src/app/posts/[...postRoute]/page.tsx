@@ -4,10 +4,10 @@ import ArrowLeft from "../../../../public/svg/arrowLeft.svg";
 import ArrowRight from "../../../../public/svg/arrowRight.svg";
 
 import './globals.css';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { ReactNode } from 'react';
+import { Clipboard } from 'lucide-react';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -15,7 +15,7 @@ export default async function BlogPost({ params }) {
         await notionToPage(slug.postRoute[0], Number(slug.postRoute[1]) - 1) 
         : 
         await getDatabasePagelist(slug.postRoute[0])
-
+    
     const getKeysAndConvert = () => {
         if ((source as any)?.frontmatter) {
             const keyArr = Object.keys((source as any)?.frontmatter);
@@ -106,21 +106,33 @@ export default async function BlogPost({ params }) {
     }
     else if (!slug.postRoute[1]){
         return (
-            <div className='flex flex-col items-center h-screen py-[50px] gap-[15px] overflowy-scroll'>
-                <p className='text-[40px] font-extrabold'>
-                    {slug.postRoute[0]} 관련 포스트 검색 결과
-                </p>
+            <div className='flex flex-col h-screen px-[50px] py-[50px] gap-[40px]'>
+                <div className='flex flex-col gap-[5px]'>
+                    <div className='flex w-[80%] text-[var(--border-light)] text-[40px] font-extrabold gap-[10px]'>
+                        <p className='text-transparent [-webkit-text-stroke:1px_var(--border-light)]'>{slug.postRoute[0]}</p>
+                        <p>관련 포스트 조회 결과</p>
+                    </div>
+
+                    <div className='flex items-center text-[var(--border-light-dark)]'>
+                        <Clipboard height={16}/>
+                        <p className='font-light'>
+                            Total Posts found : {source.totalNum}
+                        </p>  
+                    </div>
+                </div>
+                
                 <div className='flex flex-col gap-[15px]'>
                     {
                     (source as any)?.list && 
                     (source as any)?.list.map((item, index) => {
                         return(
                             <a
-                                className='underline hover:opacity-50'
+                                className='flex flex-col justify-center w-full h-[100px] px-[30px] text-[18px] font-semibold bg-[#393939] rounded-[10px] duration-300 hover:opacity-50'
                                 href={`/posts/${slug.postRoute[0]}/${index + 1}`}
                                 key={index}
                             >
-                                {item}
+                                <p>{item}</p>
+                                <p className='text-[12px] font-thin'>작성자 : 서호준</p>
                             </a>
                         )
                     })
