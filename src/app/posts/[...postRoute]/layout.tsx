@@ -16,28 +16,28 @@ export default function PageLayout({
   children: React.ReactNode;
 }>) {
   const [isMini, setIsMini] = useState<boolean>(false);
-  const [needComent, setNeedComment] = useState<boolean>(true);
+  const [need, setNeed] = useState<boolean>(true);
   const location = usePathname();
 
   useEffect(() => {
 
     if (location.split('/').length === 3) {
-      setNeedComment(false);
+      setNeed(false);
     }
     else {
-      setNeedComment(true);
+      setNeed(true);
     }
   }, [location])
 
   return (
       <section className={cn(isMini ? "pl-[110px]" : "pl-[280px]")}>
-        <ProgressBar position="top"/>
+        {need && <ProgressBar position="top"/>}
         <Navbar isMinimized={isMini} setIsMinimized={setIsMini}/>
         <Suspense>
           <AnchorNav/>
         </Suspense>
         <div className="prose dark:prose-invert">{children}</div>
-        {needComent && <Comments theme="github-dark"/>}
+        {need && <Comments theme="github-dark"/>}
       </section>
   );
 }
