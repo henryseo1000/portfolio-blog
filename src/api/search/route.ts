@@ -68,9 +68,9 @@ export async function notionToPage(path: string, postNum: number) {
         if (postCategoryList[i].path === path) {
             const dbObject = await notionClient.databases.retrieve({ database_id:  postCategoryList[i].database_id })
             .then(async (data) => {
-                if (data?.data_sources[0]) {
+                if ((data as any).data_sources[0]) {
                     const response = await notionClient.dataSources.query({
-                        data_source_id: data?.data_sources[0]?.id
+                        data_source_id: (data as any).data_sources[0]?.id
                     })
                     return response;
                 }
@@ -79,15 +79,15 @@ export async function notionToPage(path: string, postNum: number) {
                 }
             })
 
-            if(dbObject?.results && dbObject?.results[postNum]?.id) {
-                const totalNum = dbObject?.results.length;
+            if((dbObject as any).results && (dbObject as any).results[postNum]?.id) {
+                const totalNum = (dbObject as any).results.length;
                 const n2m = new NotionConverter(notionClient).withRenderer(
                     new MDXRenderer({
                         frontmatter: true
                     }),
                 );
 
-                const source = (await n2m.convert(dbObject.results[postNum]?.id)).content;
+                const source = (await n2m.convert((dbObject as any).results[postNum]?.id)).content;
                 const { content, frontmatter } = await compileMDX({
                     source: source,
                     options: {
