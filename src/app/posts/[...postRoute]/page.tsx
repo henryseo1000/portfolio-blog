@@ -7,6 +7,7 @@ import './globals.css';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { cn } from '@/utils/cn';
+import { ReactNode } from 'react';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -28,11 +29,19 @@ export default async function BlogPost({ params }) {
                         buf.push(
                             <p key={i} className='default_fronts urls'>
                                 {keyArr[i]} :
-                                {(source.frontmatter[keyArr[i]] as Array<any>)?.map((item, index) => {
-                                    return (
-                                        <a href={`${item}`} key={index}>{item}</a>
-                                    )
-                                })}
+                                {
+                                (source.frontmatter[keyArr[i]] as Array<any>)?.map ? 
+
+                                    (source.frontmatter[keyArr[i]] as Array<any>)?.map((item, index) => {
+                                        return (
+                                            <a href={`${item}`} key={index}>{item}</a>
+                                        )
+                                    })
+                                :
+
+                                    <span>{source.frontmatter[keyArr[i]] as ReactNode}</span>
+
+                                }
                             </p>
                         )
                         break;
@@ -47,18 +56,27 @@ export default async function BlogPost({ params }) {
 
                     case "Tags" === keyArr[i] || "태그" === keyArr[i]:
                         buf.push(
-                            <div key={i} className='default_fronts tags flex gap-[5px]'>
-                                태그: {(source.frontmatter.Tags as Array<any>)?.map((item, index) => {
-                                    return (
-                                        <p 
-                                            className='px-[5px] border-[0.5px] border-[var(--foreground-rgb)] rounded-[10px]'
-                                            key={index}
-                                        >
-                                            {item}
-                                        </p>
-                                    )
-                                })}
-                            </div>
+                            <p key={i} className='default_fronts tags'>
+                                {keyArr[i]} :
+                                {
+                                (source.frontmatter[keyArr[i]] as Array<any>)?.map ? 
+
+                                    (source.frontmatter[keyArr[i]] as Array<any>)?.map((item, index) => {
+                                        return (
+                                            <span 
+                                                className='mr-[5px] px-[5px] py-[5px] border-[0.5px] border-[var(--foreground-rgb)] rounded-[15px]' 
+                                                key={index}
+                                            >
+                                                {item}
+                                            </span>
+                                        )
+                                    })
+                                :
+
+                                    <span>{source.frontmatter[keyArr[i]] as ReactNode}</span>
+
+                                }
+                            </p>
                         )
                         break;
                     default:

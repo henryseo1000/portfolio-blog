@@ -23,9 +23,6 @@ p {
 }
 
 .default_fronts:not(h1) {
-    /* padding: 10px; */
-    /* border: 1px solid #333333; */
-    /* border-radius: 10px; */
     color: #B3B3B3;
     font-size: 12px;
     line-height: 2.1;
@@ -33,7 +30,7 @@ p {
     overflow: hidden;
 }
 
-h1 + p a {
+.default_fronts.urls a{
     padding: 2px 5px;
     border: #333333 1px solid;
     border-radius: 20px;
@@ -41,7 +38,7 @@ h1 + p a {
     outline: none;
 }
 
-h1 + p a:hover {
+.default_fronts.urls a:hover {
     border: #535353 1px solid;
     background-color: #2b2b2b;
 }
@@ -61,6 +58,14 @@ blockquote {
     font-weight: bold;
     border-left: 5px solid #4e4e4e;
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+blockquote p{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-items: left;
+    gap: 15px;
 }
 
 h1 {

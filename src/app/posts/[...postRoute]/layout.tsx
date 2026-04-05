@@ -15,7 +15,7 @@ export default function PageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isMini, setIsMini] = useState<boolean>(true);
+  const [isMini, setIsMini] = useState<boolean>(false);
   const [needComent, setNeedComment] = useState<boolean>(true);
   const location = usePathname();
 
@@ -27,11 +27,10 @@ export default function PageLayout({
     else {
       setNeedComment(true);
     }
-    
   }, [location])
 
   return (
-      <section className={cn(isMini ? "pl-[215px]" : "pl-[280px]")}>
+      <section className={cn(isMini ? "pl-[110px]" : "pl-[280px]")}>
         <ProgressBar position="top"/>
         <Navbar isMinimized={isMini} setIsMinimized={setIsMini}/>
         <Suspense>
