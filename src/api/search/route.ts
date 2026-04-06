@@ -10,6 +10,7 @@ import remarkGfm from 'remark-gfm'
 import rehypePrismPlus from "rehype-prism-plus"
 import rehypeCodeTitles from "rehype-code-titles"
 import { postCategoryList } from "@/data/postCategory";
+import projectsList from "@/data/project";
 
 const POST_FOLDER_NAME = "src/app/posts/database/(markdowns)";
 const POSTS_DIRECTORY = path.join(process.cwd(), POST_FOLDER_NAME);
@@ -145,4 +146,50 @@ export async function getDatabasePagelist(path: string) {
     }
 
     return {}
+}
+
+export async function getPagelistByProject( projectNum : string ) {
+    const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
+
+    const dbObject = await notionClient.databases.retrieve({ database_id: "e975da6fc4f3451b958271228c983454" })
+        .then(async (data) => {
+            
+            if ((data as any).data_sources[0]) {
+
+                const response = await notionClient.dataSources.query({
+                    data_source_id: (data as any).data_sources[0]?.id,
+                    filter : {
+                        'property': 'Project',
+                        'relation': {'contains' : projectsList[Number(projectNum) - 1].uuid}
+                        }
+                })
+                
+                return response;
+            }
+        })
+        
+        
+    if ((dbObject as any)?.results) {
+        const buf = []
+        const totalNum = (dbObject as any).results.length;
+        (dbObject as any).results.map((item, index) => {
+            
+            if (item?.properties) {
+                const keyArr = Object.keys(item.properties)
+                        
+                if (keyArr.length > 0) {
+                    const titleKey = keyArr.filter((key) => {return item.properties[key].type === "title"})[0]
+
+                    buf.push(item?.properties[titleKey].title[0].plain_text)
+                }
+            }
+         })
+
+         
+
+        return { list : buf, totalNum: totalNum }
+    }
+    else {
+        return {}
+    }
 }

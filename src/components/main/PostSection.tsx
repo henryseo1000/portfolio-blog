@@ -7,7 +7,7 @@ function PostSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
         data-aos="fade-left"
         className='flex justify-end w-full gap-[10px] text-[48px] font-extrabold'
       >
-        <p className=' '>Recent</p>
+        <p>Recent</p>
         <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>Posts</p>
       </div>
     </div>

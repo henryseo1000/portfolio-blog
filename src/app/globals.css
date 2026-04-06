@@ -14,6 +14,9 @@
   --border-light: #B3B3B3;
   --border-light-dark: #4C4C4C;
   --border-dark: #4D4D4D;
+  --swiper-pagination-color: var(--foreground-rgb);
+  --swiper-pagination-bullet-inactive-opacity: 1
+  --swiper-pagination-bullet-active-opacity: 1
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +31,9 @@
     --border-light: #B3B3B3;
     --border-light-dark: #4C4C4C;
     --border-dark: #4D4D4D;
+    --swiper-pagination-color: var(--foreground-rgb);
+    --swiper-pagination-bullet-inactive-opacity: 1
+    --swiper-pagination-bullet-active-opacity: 1
   }
 }
 
@@ -38,6 +44,10 @@ html {
 body {
   color: var(--foreground-rgb);
   background-color: var(--background-plain);
+}
+
+.swiper-pagination-bullet-active {
+  border: 1px var(--border-light) solid !important;
 }
 
 @layer utilities {

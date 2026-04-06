@@ -16,7 +16,7 @@ import { SkillTypes } from '@/types/skillTypes';
 function SkillSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const [category, setCategory] = useState<string>("all");
   const [list, setFilteredList] = useState<SkillTypes[]>(skills);
-  SwiperCore.use([Autoplay]);
+  SwiperCore.use([Autoplay, Pagination]);
 
   const skillPages = () => {
     const arr = [];

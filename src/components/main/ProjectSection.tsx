@@ -3,6 +3,7 @@ import Marquee from "react-fast-marquee";
 import ProjectCards from './section_components/ProjectCards';
 import { useRouter } from 'next/navigation';
 import MainButton from './section_components/MainButton';
+import projectsList from '@/data/project';
 
 function ProjectSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const router = useRouter();
@@ -28,30 +29,13 @@ function ProjectSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
               gradient
               gradientColor={"#000000"}
             >
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. 동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.'
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. '
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. '
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. '
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
+              {
+                projectsList.map((item, index) => {
+                  return (
+                    <ProjectCards key={index} {...item} onClick={() => {router.push(`/projects/${index + 1}`)}}/>
+                  )
+                })
+              }
           </Marquee> 
           </section>
           
@@ -66,30 +50,13 @@ function ProjectSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
             gradientColor={"#000000"}
             direction='right'
           >
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. 동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.동아리 도서 관리 프로젝트입니다.'
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. '
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. '
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
-              <ProjectCards 
-                title="2024 개인 프로젝트 #1 - 동아리 도서 관리 인프라 제작"
-                description='동아리 도서 관리 프로젝트입니다. '
-                tagList={["웹", "백엔드", "Convex"]}
-                onClick={() => {router.push('/projects')}}
-              />
+            {
+              projectsList.map((item, index) => {
+                return (
+                  <ProjectCards key={index} {...item} onClick={() => {router.push(`/projects/${index + 1}`)}}/>
+                )
+              })
+            }
           </Marquee> 
         </section>
       </div>  
