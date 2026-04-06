@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   description: "Blog Made By Hojun Seo",
   icons: {
     icon: "/logo_dark.svg"
+  },
+  verification: {
+    google: "5W9n5dIhtETEngGlBIb3q2Z2L4zxocEzQ4E58yq2sRc"
   }
 };
 

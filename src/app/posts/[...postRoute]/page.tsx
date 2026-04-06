@@ -121,7 +121,7 @@ export default async function BlogPost({ params }) {
                     </div>
                 </div>
                 
-                <div className='flex flex-col gap-[15px]'>
+                <div className='flex flex-col pb-[50px] gap-[15px]'>
                     {
                     (source as any)?.list && 
                     (source as any)?.list.map((item, index) => {
