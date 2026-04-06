@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   description: "Blog Made By Hojun Seo",
   icons: {
     icon: "/logo_dark.svg"
-  },
-  verification: {
-    google: "5W9n5dIhtETEngGlBIb3q2Z2L4zxocEzQ4E58yq2sRc"
   }
 };
 
@@ -23,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        <meta name="google-site-verification" content="5W9n5dIhtETEngGlBIb3q2Z2L4zxocEzQ4E58yq2sRc" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body>
