@@ -1,7 +1,4 @@
 import postCategoryProps from "@/types/postCategoryTypes";
-
-
-import FrontEnd from "../../public/svg/front-end.svg";
 import { Cpu, Database, GitGraph, Monitor, PanelsTopLeft, Server, Settings } from "lucide-react"
 
 export const postCategoryList : postCategoryProps[] = [

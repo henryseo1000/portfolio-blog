@@ -3,16 +3,18 @@ import { getDatabasePagelist, notionToPage } from '@/api/search/route';
 import ArrowLeft from "../../../../public/svg/arrowLeft.svg";
 import ArrowRight from "../../../../public/svg/arrowRight.svg";
 
-import './globals.css';
 import { redirect } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 import { Clipboard } from 'lucide-react';
+import Comments from '@/components/posts/Comments';
+import { postCategoryList } from '@/data/postCategory';
+import MainButton from '@/components/main/section_components/MainButton';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
-    const source = Number(slug.postRoute[1]) ? 
-        await notionToPage(slug.postRoute[0], Number(slug.postRoute[1]) - 1) 
+    const source = slug.postRoute[1] !== undefined ?
+        await notionToPage(slug.postRoute[0], slug.postRoute[1]) 
         : 
         await getDatabasePagelist(slug.postRoute[0])
     
@@ -99,10 +101,15 @@ export default async function BlogPost({ params }) {
         }
     }
 
-    if ((isNaN(slug.postRoute[1]) && slug.postRoute[1] !== undefined) ||
-        (slug.postRoute[1] && (source as any)?.content === undefined)
+    if ((slug.postRoute[1] && (source as any)?.content === undefined) ||
+        (slug.postRoute[0] && postCategoryList.filter((item) => {return item.path === slug.postRoute[0]}).length === 0)
     ) {
-        return redirect(`/posts/${slug.postRoute[0]}`)
+        return (
+            <div className='flex flex-col items-center justify-center w-full h-screen'>
+                <p className=''>존재하지 않는 페이지입니다!</p>
+                <a className='text-[var(--border-light)] underline' href="/posts">포스팅 홈으로 돌아가기</a>
+            </div>
+        )
     }
     else if (!slug.postRoute[1]){
         return (
@@ -128,10 +135,10 @@ export default async function BlogPost({ params }) {
                         return(
                             <a
                                 className='flex flex-col justify-center w-full h-[100px] px-[30px] text-[18px] font-semibold bg-[#393939] rounded-[10px] duration-300 hover:opacity-50'
-                                href={`/posts/${slug.postRoute[0]}/${index + 1}`}
+                                href={`/posts/${slug.postRoute[0]}/${item.pageId}`}
                                 key={index}
                             >
-                                <p>{item}</p>
+                                <p>{item.title}</p>
                                 <p className='text-[12px] font-thin'>작성자 : 서호준</p>
                             </a>
                         )
@@ -143,6 +150,7 @@ export default async function BlogPost({ params }) {
     }
 
     return (
+        <Fragment>
         <div className='flex flex-col gap-[15px]'>
             <div className={cn('flex flex-col px-[40px] pt-[70px] pb-[45px] gap-[10px] border-[#4c4c4c] border-[0.5px] rounded-[20px] bg-[#2A2A2A]', (source as any)?.content === undefined && "h-[calc(100vh_-_30px)]")}>
                 <div className='flex flex-col mb-[30px] gap-[5px]'>
@@ -161,14 +169,14 @@ export default async function BlogPost({ params }) {
                 <div className='flex justify-between w-full h-[80px] gap-[15px]'>
                     <a
                         className={cn('flex items-center justify-between w-[250px] h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px] cursor-pointer', 
-                            (Number(slug.postRoute[1]) === 1) && "pointer-events-none cursor-default opacity-45")}
-                        href={`${Number(slug.postRoute[1]) - 1}`}
+                            !(source as any)?.prevPage.pageId && "pointer-events-none cursor-default opacity-45")}
+                        href={`${(source as any)?.prevPage.pageId ? (source as any)?.prevPage.pageId : ""}`}
                     >
                         <ArrowLeft className='h-[20px]'/>
-                        {   Number(slug.postRoute[1]) !== 1 ?
-                            <div className='flex flex-col gap-[5px] text-right'>
+                        {   (source as any)?.prevPage?.pageId ?
+                            <div className='flex flex-col w-full gap-[5px] text-right'>
                                 <p className='text-[#B3B3B3] text-[13px] font-bold'>이전 글</p>
-                                <p className='text-[#B3B3B3] text-[13px] font-light'>이전 글 제목이 들어갈 부분</p>
+                                <p className='max-w-[calc(100%_-_15px)] text-[#B3B3B3] text-[13px] font-light text-ellipsis line-clamp-1 overflow-hidden'>{(source as any)?.prevPage.title}</p>
                             </div>
                             :
                             <div className='flex flex-col gap-[5px] text-right'>
@@ -180,13 +188,13 @@ export default async function BlogPost({ params }) {
                     
                     <a
                         className={cn('flex items-center justify-between w-[250px] h-full px-[30px] bg-[#2A2A2A] border-[0.5px] border-[#4C4C4C] rounded-[20px] cursor-pointer', 
-                            source?.totalNum === Number(slug.postRoute[1]) && "pointer-events-none cursor-default opacity-45")}
-                        href={`${Number(slug.postRoute[1]) + 1}`}
+                            !(source as any)?.nextPage.pageId && "pointer-events-none cursor-default opacity-45")}
+                        href={`${(source as any)?.nextPage.pageId ? (source as any)?.nextPage.pageId : ""}`}
                     >   
-                        {!(source?.totalNum === Number(slug.postRoute[1])) ?
-                            <div className='flex flex-col gap-[5px]'>
+                        { (source as any)?.nextPage?.pageId  ?
+                            <div className='flex flex-col w-full gap-[5px]'>
                                 <p className='text-[#B3B3B3] text-[13px] font-bold'>다음 글</p>
-                                <p className='text-[#B3B3B3] text-[13px] font-light'>다음 글 제목이 들어갈 부분</p>
+                                <p className='max-w-[calc(100%_-_15px)] text-[#B3B3B3] text-[13px] font-light text-ellipsis line-clamp-1 overflow-hidden'>{(source as any)?.nextPage.title}</p>
                             </div>
                             :
                             <div className='flex flex-col gap-[5px]'>
@@ -199,5 +207,7 @@ export default async function BlogPost({ params }) {
                 </div>
             }
         </div>
+        <Comments theme="github-dark"/>
+        </Fragment>
     )
 }

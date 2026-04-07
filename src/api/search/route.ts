@@ -60,7 +60,7 @@ export async function notionToMarkdown() {
     return {content, frontmatter}
 }
 
-export async function notionToPage(path: string, postNum: number) {
+export async function notionToPage(path: string, postId: string) {
     const len = postCategoryList.length;
     const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
 
@@ -70,7 +70,13 @@ export async function notionToPage(path: string, postNum: number) {
             .then(async (data) => {
                 if ((data as any).data_sources[0]) {
                     const response = await notionClient.dataSources.query({
-                        data_source_id: (data as any).data_sources[0]?.id
+                        data_source_id: (data as any).data_sources[0]?.id,
+                        "sorts": [
+                            {
+                                "timestamp": "created_time",
+                                "direction": "ascending"
+                            },
+                        ]
                     })
                     return response;
                 }
@@ -79,27 +85,81 @@ export async function notionToPage(path: string, postNum: number) {
                 }
             })
 
-            if((dbObject as any).results && (dbObject as any).results[postNum]?.id) {
-                const totalNum = (dbObject as any).results.length;
-                const n2m = new NotionConverter(notionClient).withRenderer(
-                    new MDXRenderer({
-                        frontmatter: true
-                    }),
-                );
+            if((dbObject as any).results) {
+                let next = {}
+                let prev = {}
+                let foundIdx = 0;
 
-                const source = (await n2m.convert((dbObject as any).results[postNum]?.id)).content;
-                const { content, frontmatter } = await compileMDX({
-                    source: source,
-                    options: {
-                        parseFrontmatter: true,
-                        mdxOptions: {
-                            remarkPlugins: [[remarkGfm, { strict: true, throwOnError: true }]],
-                            rehypePlugins: [[rehypeCodeTitles], [rehypePrismPlus]]
+                const filteredList = (dbObject as any).results?.find((item, index) => {
+                    if (item?.id.replace("-", "") === postId.replace("-", "")) {
+                        foundIdx = index;
+                        return true;
+                    }
+                    else {
+                        false;
+                    }
+                })
+
+                if (filteredList) {
+                    const totalNum = (dbObject as any).results.length;
+
+                    const n2m = new NotionConverter(notionClient).withRenderer(
+                        new MDXRenderer({
+                            frontmatter: true
+                        }),
+                    );
+
+                    const source = (await n2m.convert(filteredList.id)).content;
+                    const { content, frontmatter } = await compileMDX({
+                        source: source,
+                        options: {
+                            parseFrontmatter: true,
+                            mdxOptions: {
+                                remarkPlugins: [[remarkGfm, { strict: true, throwOnError: true }]],
+                                rehypePlugins: [[rehypeCodeTitles], [rehypePrismPlus]]
+                            }
+                        },
+                    });
+
+                    if (foundIdx < totalNum - 1) {
+                        if ((dbObject as any).results[foundIdx + 1]) {
+                            const keyArr = Object.keys((dbObject as any).results[foundIdx + 1].properties)
+
+                            if(keyArr.length > 0) {
+                                const titleKey = keyArr.find((key) => {return (dbObject as any).results[foundIdx + 1].properties[key].type === "title"});
+
+                                next = {
+                                    title: (dbObject as any).results[foundIdx + 1]?.properties[titleKey].title[0].plain_text,
+                                    pageId: (dbObject as any).results[foundIdx + 1]?.id
+                                }
+                            }
                         }
-                    },
-                });
+                    }
+                    
+                    if (foundIdx > 0) {
+                        const keyArr = Object.keys((dbObject as any).results[foundIdx - 1].properties)
 
-                return { content, frontmatter, totalNum: totalNum }
+                        if (keyArr.length > 0) {
+                            const titleKey = keyArr.find((key) => {return (dbObject as any).results[foundIdx - 1].properties[key].type === "title"});
+
+                            prev = {
+                                title: (dbObject as any).results[foundIdx - 1]?.properties[titleKey].title[0].plain_text,
+                                pageId: (dbObject as any).results[foundIdx - 1]?.id
+                            }
+                        }
+                    }
+
+
+                    return { 
+                        content, 
+                        frontmatter, 
+                        totalNum: totalNum, 
+                        nextPage: next, 
+                        prevPage: prev, 
+                        type: path 
+                    }
+                }
+                
             }
         }
     }
@@ -118,8 +178,15 @@ export async function getDatabasePagelist(path: string) {
 
                 if ((data as any).data_sources[0]) {
                     const response = await notionClient.dataSources.query({
-                        data_source_id: (data as any).data_sources[0]?.id
+                        data_source_id: (data as any).data_sources[0]?.id,
+                        "sorts": [
+                            {
+                                "timestamp": "created_time",
+                                "direction": "ascending"
+                            },
+                        ]
                     })
+                    console.log(response)
                     return response;
                 }
             })
@@ -127,15 +194,27 @@ export async function getDatabasePagelist(path: string) {
             if ((dbObject as any)?.results) {
                 const buf = []
                 const totalNum = (dbObject as any).results.length;
-                (dbObject as any).results.map((item, index) => {
+                (dbObject as any).results.map((item) => {
                     
                     if (item?.properties) {
                         const keyArr = Object.keys(item.properties)
-                        
-                        if(keyArr.length > 0) {
-                            const titleKey = keyArr.filter((key) => {return item.properties[key].type === "title"})[0]
+                        const keyLen = keyArr.length
 
-                            buf.push(item?.properties[titleKey].title[0].plain_text)
+                        if (keyLen > 0) {
+                            let titleKey = "";
+
+                            for (let i = 0; i < keyLen; i++) {
+                                if (item.properties[keyArr[i]].type === "title") {
+                                    titleKey = keyArr[i];
+                                    break;
+                                }
+                            }
+
+                            buf.push({
+                                title: item?.properties[titleKey].title[0].plain_text,
+                                pageId: item?.id,
+                                type: path
+                            })
                         }
                     }
                 })
@@ -146,6 +225,29 @@ export async function getDatabasePagelist(path: string) {
     }
 
     return {}
+}
+
+export async function getPageById (pageId: string) {
+    const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
+    const n2m = new NotionConverter(notionClient).withRenderer(
+    new MDXRenderer({
+            frontmatter: true
+        }),
+    );
+
+    const source = (await n2m.convert(pageId)).content;
+    const { content, frontmatter } = await compileMDX({
+        source: source,
+        options: {
+            parseFrontmatter: true,
+            mdxOptions: {
+                remarkPlugins: [[remarkGfm, { strict: true, throwOnError: true }]],
+                rehypePlugins: [[rehypeCodeTitles], [rehypePrismPlus]]
+            }
+        },
+    });
+
+    return { content, frontmatter }
 }
 
 export async function getPagelistByProject( projectNum : string ) {
@@ -161,7 +263,7 @@ export async function getPagelistByProject( projectNum : string ) {
                     filter : {
                         'property': 'Project',
                         'relation': {'contains' : projectsList[Number(projectNum) - 1].uuid}
-                        }
+                    }
                 })
                 
                 return response;
@@ -172,24 +274,66 @@ export async function getPagelistByProject( projectNum : string ) {
     if ((dbObject as any)?.results) {
         const buf = []
         const totalNum = (dbObject as any).results.length;
-        (dbObject as any).results.map((item, index) => {
+
+        (dbObject as any).results.map((item) => {
             
             if (item?.properties) {
                 const keyArr = Object.keys(item.properties)
                         
                 if (keyArr.length > 0) {
-                    const titleKey = keyArr.filter((key) => {return item.properties[key].type === "title"})[0]
+                    const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
 
                     buf.push(item?.properties[titleKey].title[0].plain_text)
                 }
             }
-         })
-
-         
+        })
 
         return { list : buf, totalNum: totalNum }
     }
     else {
         return {}
     }
+}
+
+export async function getAllPosts() {
+    const len = postCategoryList.length;
+    const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
+    const buf = []
+
+    for ( let i = 0; i < len; i++ ) {
+            const dbObject = await notionClient.databases.retrieve({ database_id:  postCategoryList[i].database_id })
+
+            .then(async (data) => {
+
+                if ((data as any).data_sources[0]) {
+                    const response = await notionClient.dataSources.query({
+                        data_source_id: (data as any).data_sources[0]?.id
+                    })
+
+                    return response;
+                }
+            })
+
+            if ((dbObject as any)?.results) {
+            
+                (dbObject as any).results.map((item) => {
+                    
+                    if (item?.properties) {
+                        const keyArr = Object.keys(item.properties)
+
+                        if (keyArr.length > 0) {
+                            const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
+
+                            buf.push({
+                                title: item?.properties[titleKey].title[0].plain_text,
+                                pageId: item?.id,
+                                type: path
+                            })
+                        }
+                    }
+                })
+            }
+    }
+
+    return { list : buf, totalNum: buf.length }
 }
