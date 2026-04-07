@@ -4,4 +4,5 @@ export default interface postCategoryProps {
     database_id?: string;
     path?: string;
     childDatabase?: postCategoryProps[];
+    thumbnail?: string;
 }

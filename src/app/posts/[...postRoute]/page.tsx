@@ -136,10 +136,13 @@ export default async function BlogPost({ params }) {
                                 href={`/posts/${slug.postRoute[0]}/${item.pageId}`}
                                 key={index}
                             >
-                                <div className='flex w-full h-full bg-[url("/profile_1.jpg")] bg-cover'>
+                                <img
+                                    className='flex h-[calc(100%_-_80px)] rounded-[0px] object-cover'
+                                    src={postCategoryList.find((data) => {return data.path === slug.postRoute[0]})?.thumbnail}
+                                    alt='thumbnail'
+                                />
 
-                                </div>
-                                <div className='flex flex-col h-[100px] px-[20px] py-[10px]'>
+                                <div className='flex flex-col justify-center h-[80px] px-[20px] py-[10px]'>
                                     <p className='whitespace-nowrap text-ellipsis overflow-hidden'>{item.title}</p>
                                     <p className='text-[12px] font-thin'>작성자 : 서호준</p>
                                 </div>

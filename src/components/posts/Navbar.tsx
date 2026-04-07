@@ -30,7 +30,7 @@ export default function Navbar ({
     }
 
     const handleMouseEvent = (e : MouseEvent) => {
-        
+
     }
 
     useEffect(() => {
@@ -72,9 +72,9 @@ export default function Navbar ({
                         return (
                             <a 
                                 key={index}
-                                className={cn("flex items-center px-[25px] py-[20px] gap-[15px] duration-300 cursor-pointer select-none hover:bg-[var(--border-light-dark)]", 
+                                className={cn("flex relative items-center px-[25px] py-[20px] gap-[15px] duration-300 cursor-pointer select-none hover:bg-[var(--border-light-dark)]", 
                                     focused === index && "bg-[var(--border-light-dark)]",
-                                    isMinimized && "justify-center h-[330px] px-0 [&:hover>div]:flex"
+                                    isMinimized && "justify-center h-[330px] px-0 [&:hover>div]:flex [&:hover>div]:opacity-70"
                                 )}
                                 href={`/posts/${item.path}`}
                                 onClick={() => {
@@ -87,7 +87,9 @@ export default function Navbar ({
                                         {item.title}
                                     </p>
                                 }
-                                <div className="hidden absolute left-0 text-[12px]">{item.title}</div>
+                                <div className="hidden absolute items-center justify-center left-[50%] w-full h-full text-[12px] bg-[var(--border-light-dark)] opacity-0 translate-x-[-50%] duration-300 hover:flex">
+                                    <p className="text-center">{item.title}</p>
+                                </div>
                             </a>
                         )
                     })
