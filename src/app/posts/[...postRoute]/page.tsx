@@ -3,13 +3,11 @@ import { getDatabasePagelist, notionToPage } from '@/api/search/route';
 import ArrowLeft from "../../../../public/svg/arrowLeft.svg";
 import ArrowRight from "../../../../public/svg/arrowRight.svg";
 
-import { redirect } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Fragment, ReactNode } from 'react';
 import { Clipboard } from 'lucide-react';
 import Comments from '@/components/posts/Comments';
 import { postCategoryList } from '@/data/postCategory';
-import MainButton from '@/components/main/section_components/MainButton';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -113,14 +111,14 @@ export default async function BlogPost({ params }) {
     }
     else if (!slug.postRoute[1]){
         return (
-            <div className='flex flex-col h-screen px-[50px] py-[50px] gap-[40px]'>
+            <div className='flex flex-col h-screen px-[100px] py-[50px] gap-[40px]'>
                 <div className='flex flex-col gap-[5px]'>
-                    <div className='flex w-[80%] text-[var(--border-light)] text-[40px] font-extrabold gap-[10px]'>
-                        <p className='text-transparent [-webkit-text-stroke:1px_var(--border-light)]'>{slug.postRoute[0]}</p>
+                    <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[40px] font-extrabold gap-[10px]'>
+                        <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
                         <p>관련 포스트 조회 결과</p>
                     </div>
 
-                    <div className='flex items-center text-[var(--border-light-dark)]'>
+                    <div className='flex items-center text-[var(--border-light)]'>
                         <Clipboard height={16}/>
                         <p className='font-light'>
                             Total Posts found : {source.totalNum}
@@ -128,18 +126,23 @@ export default async function BlogPost({ params }) {
                     </div>
                 </div>
                 
-                <div className='flex flex-col pb-[50px] gap-[15px]'>
+                <div className='grid grid-cols-3 pb-[50px] gap-[30px]'>
                     {
                     (source as any)?.list && 
                     (source as any)?.list.map((item, index) => {
                         return(
                             <a
-                                className='flex flex-col justify-center w-full h-[100px] px-[30px] text-[18px] font-semibold bg-[#393939] rounded-[10px] duration-300 hover:opacity-50'
+                                className='flex flex-col justify-center w-full h-[250px] text-[18px] font-semibold border-[0.5px] border-[#4C4C4C] bg-[#393939] rounded-[10px] duration-300 overflow-hidden hover:opacity-50'
                                 href={`/posts/${slug.postRoute[0]}/${item.pageId}`}
                                 key={index}
                             >
-                                <p>{item.title}</p>
-                                <p className='text-[12px] font-thin'>작성자 : 서호준</p>
+                                <div className='flex w-full h-full bg-[url("/profile_1.jpg")] bg-cover'>
+
+                                </div>
+                                <div className='flex flex-col h-[100px] px-[20px] py-[10px]'>
+                                    <p className='whitespace-nowrap text-ellipsis overflow-hidden'>{item.title}</p>
+                                    <p className='text-[12px] font-thin'>작성자 : 서호준</p>
+                                </div>
                             </a>
                         )
                     })
@@ -174,9 +177,9 @@ export default async function BlogPost({ params }) {
                     >
                         <ArrowLeft className='h-[20px]'/>
                         {   (source as any)?.prevPage?.pageId ?
-                            <div className='flex flex-col w-full gap-[5px] text-right'>
+                            <div className='flex flex-col max-w-[calc(100%_-_20px)] gap-[5px] text-right overflow-hidden'>
                                 <p className='text-[#B3B3B3] text-[13px] font-bold'>이전 글</p>
-                                <p className='max-w-[calc(100%_-_15px)] text-[#B3B3B3] text-[13px] font-light text-ellipsis line-clamp-1 overflow-hidden'>{(source as any)?.prevPage.title}</p>
+                                <p className='text-[#B3B3B3] text-[13px] font-light text-right whitespace-nowrap text-ellipsis line-clamp-1'>{(source as any)?.prevPage.title}</p>
                             </div>
                             :
                             <div className='flex flex-col gap-[5px] text-right'>
@@ -192,9 +195,9 @@ export default async function BlogPost({ params }) {
                         href={`${(source as any)?.nextPage.pageId ? (source as any)?.nextPage.pageId : ""}`}
                     >   
                         { (source as any)?.nextPage?.pageId  ?
-                            <div className='flex flex-col w-full gap-[5px]'>
+                            <div className='flex flex-col max-w-[calc(100%_-_20px)] gap-[5px] overflow-hidden'>
                                 <p className='text-[#B3B3B3] text-[13px] font-bold'>다음 글</p>
-                                <p className='max-w-[calc(100%_-_15px)] text-[#B3B3B3] text-[13px] font-light text-ellipsis line-clamp-1 overflow-hidden'>{(source as any)?.nextPage.title}</p>
+                                <p className='text-[#B3B3B3] text-[13px] font-light whitespace-nowrap text-ellipsis line-clamp-1'>{(source as any)?.nextPage.title}</p>
                             </div>
                             :
                             <div className='flex flex-col gap-[5px]'>

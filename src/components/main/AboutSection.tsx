@@ -12,18 +12,20 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const buttonList = [
     {
       svg: <Email/>,
-      onClick: () => {}
+      onClick: () => {
+        window.open("mailto:henryseo1000@gmail.com")
+      }
     },
     {
       svg: <Github/>,
       onClick: () => {
-        window.open('https://github.com/henryseo1000', '_self')
+        window.open('https://github.com/henryseo1000')
       }
     },
     {
       svg: <Instagram/>,
       onClick: () => {
-        window.open("https://www.instagram.com/hojun_seo_0827/", "_self")
+        window.open("https://www.instagram.com/hojun_seo_0827/")
       }
     }
   ]

@@ -28,7 +28,7 @@ function ProjectCards({title = "", description, tagList = [""], onClick} : Proje
                 }
             </div>
 
-            <p className='w-[340px] text-[var(--border-light-dark)] line-clamp-2 overflow-hidden text-ellipsis'>
+            <p className='w-[340px] text-[var(--border-light)] line-clamp-2 overflow-hidden text-ellipsis'>
                 {description && description}
             </p>
         </div>

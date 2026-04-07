@@ -29,6 +29,10 @@ export default function Navbar ({
         })
     }
 
+    const handleMouseEvent = (e : MouseEvent) => {
+        
+    }
+
     useEffect(() => {
         setInitialFocus();
     }, [location])
@@ -62,7 +66,7 @@ export default function Navbar ({
                 </div>
             }
 
-            <div className="flex flex-col max-h-[372px] pb-[5px] overflow-y-scroll">
+            <div className="flex flex-col max-h-full pb-[5px] overflow-y-scroll">
                 {
                     postCategoryList.map((item, index) => {
                         return (
@@ -70,7 +74,7 @@ export default function Navbar ({
                                 key={index}
                                 className={cn("flex items-center px-[25px] py-[20px] gap-[15px] duration-300 cursor-pointer select-none hover:bg-[var(--border-light-dark)]", 
                                     focused === index && "bg-[var(--border-light-dark)]",
-                                    isMinimized && "justify-center h-[330px] px-0"
+                                    isMinimized && "justify-center h-[330px] px-0 [&:hover>div]:flex"
                                 )}
                                 href={`/posts/${item.path}`}
                                 onClick={() => {
@@ -83,6 +87,7 @@ export default function Navbar ({
                                         {item.title}
                                     </p>
                                 }
+                                <div className="hidden absolute left-0 text-[12px]">{item.title}</div>
                             </a>
                         )
                     })
@@ -90,8 +95,8 @@ export default function Navbar ({
             </div>
 
             <div 
-                className={cn("flex flex-col relative items-center justify-center pt-[35px] gap-[20px]",
-                    isMinimized && "py-[5px]"
+                className={cn("flex flex-col items-center justify-center bottom-0 w-full h-[120px] gap-[20px] bg-[#393939]",
+                    isMinimized && "py-[-px]"
                 )}
             >
                 <button

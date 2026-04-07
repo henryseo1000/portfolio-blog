@@ -10,9 +10,10 @@ function Loading() {
           width={30}
           height={30}
           alt="spinner"
+          draggable={false}
         />
       </div>
-      <p className='text-center font-thin'>조금 시간이 걸릴 수 있어요<br/>잠시만 기다려 주세요...</p>
+      <p className='text-center font-thin select-none'>조금 시간이 걸릴 수 있어요<br/>잠시만 기다려 주세요...</p>
     </div>
   )
 }
