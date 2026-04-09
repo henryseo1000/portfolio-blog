@@ -167,7 +167,7 @@ export async function notionToPage(path: string, postId: string) {
     return {}
 }
 
-export async function getDatabasePagelist(path: string) {
+export async function getDatabasePagelist(path: string, input : string = "") {
     const len = postCategoryList.length;
     const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
 
@@ -251,7 +251,12 @@ export async function getPageById (pageId: string) {
     return { content, frontmatter }
 }
 
-export async function getPagelistByProject( projectNum : string ) {
+export async function getPagelistByProject( projectNum : number ) {
+
+    if (projectNum > projectsList.length) {
+        return {};
+    }
+
     const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
 
     const dbObject = await notionClient.databases.retrieve({ database_id: "e975da6fc4f3451b958271228c983454" })
@@ -263,7 +268,7 @@ export async function getPagelistByProject( projectNum : string ) {
                     data_source_id: (data as any).data_sources[0]?.id,
                     filter : {
                         'property': 'Project',
-                        'relation': {'contains' : projectsList[Number(projectNum) - 1].uuid}
+                        'relation': {'contains' : projectsList[Number(projectNum) - 1]?.uuid}
                     }
                 })
                 
@@ -276,7 +281,7 @@ export async function getPagelistByProject( projectNum : string ) {
         const buf = []
         const totalNum = (dbObject as any).results.length;
 
-        (dbObject as any).results.map((item) => {
+        (dbObject as any).results.map((item, index) => {
             
             if (item?.properties) {
                 const keyArr = Object.keys(item.properties)
@@ -284,7 +289,12 @@ export async function getPagelistByProject( projectNum : string ) {
                 if (keyArr.length > 0) {
                     const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
 
-                    buf.push(item?.properties[titleKey].title[0].plain_text)
+                    buf.push({
+                        title: item?.properties[titleKey].title[0].plain_text,
+                        pageId: item?.id,
+                        type: path,
+                        projectNum: projectNum
+                    })
                 }
             }
         })
@@ -296,7 +306,7 @@ export async function getPagelistByProject( projectNum : string ) {
     }
 }
 
-export async function getAllPosts() {
+export async function getAllPosts(input : string = "") {
     const len = postCategoryList.length;
     const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
     const buf = []

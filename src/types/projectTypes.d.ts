@@ -3,5 +3,8 @@ export default interface ProjectProps {
     description: string;
     tagList: string[];
     uuid?: string;
+    thumbnailPath?: string;
+    gitRepo?: string;
+    link?: string;
     onClick?: () => void;
 }

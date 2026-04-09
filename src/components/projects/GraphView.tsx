@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react'
 import type * as d3Types from 'd3'
 import { GraphNode } from '@/types/graph';
+import { useRouter } from 'next/navigation';
 
 function GraphView() {
     const [isD3Loaded, setIsD3Loaded] = useState(false);
     const d3Ref = useRef<typeof d3Types | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         import('d3').then(d3Module => {
@@ -76,7 +78,7 @@ function GraphView() {
             .attr("fill", "#d3d3d3")
             .attr("cursor", "pointer")
             .on('click', (e, d) => {
-
+                router.push('/projects/1');
             })
             .on('mouseon', (e, d) => {
                 

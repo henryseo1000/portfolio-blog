@@ -9,6 +9,8 @@ import { Clipboard } from 'lucide-react';
 import Comments from '@/components/posts/Comments';
 import { postCategoryList } from '@/data/postCategory';
 import { div } from 'three/src/nodes/math/OperatorNode.js';
+import PostCard from '@/components/common/PostCard';
+import parseFrontmatter from '@/utils/parseFrontmatter';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -17,89 +19,6 @@ export default async function BlogPost({ params }) {
         : 
         await getDatabasePagelist(slug.postRoute[0])
     const thumbnailPath = postCategoryList.find((item) => {return item.path === slug.postRoute[0]})?.thumbnail
-    
-    const getKeysAndConvert = () => {
-        if ((source as any)?.frontmatter) {
-            const keyArr = Object.keys((source as any)?.frontmatter);
-            const len = keyArr?.length;
-            let buf = [];
-            
-            for (let i = 0; i < len; i++) {
-                if((source as any)?.frontmatter[keyArr[i]] !== "" &&
-                    (source as any)?.frontmatter[keyArr[i]] !== null &&
-                    ((source as any)?.frontmatter[keyArr[i]] as Array<any>)?.length !== 0
-                ) {
-                    switch (true) {
-                    case "URL" === keyArr[i] || "파일과 미디어" === keyArr[i]:
-                        buf.push(
-                            <p key={i} className='default_fronts urls'>
-                                {keyArr[i]} :
-                                {
-                                ((source as any)?.frontmatter[keyArr[i]] as Array<any>)?.map ? 
-
-                                    ((source as any)?.frontmatter[keyArr[i]] as Array<any>)?.map((item, index) => {
-                                        return (
-                                            <a href={`${item}`} key={index}>{item}</a>
-                                        )
-                                    })
-                                :
-
-                                    <span>{(source as any)?.frontmatter[keyArr[i]] as ReactNode}</span>
-
-                                }
-                            </p>
-                        )
-                        break;
-
-                    case "Name" === keyArr[i] ||  "이름" === keyArr[i]:
-                        buf = [<h1 key={i} className='default_fronts title'>{(source as any)?.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
-                        break;
-
-                    case "Assign" === keyArr[i]:
-                        buf.push(<p key={i} className='default_fronts title'>작성자: {(source as any)?.frontmatter[keyArr[i]] as string}</p>)
-                        break;
-
-                    case "Tags" === keyArr[i] || "태그" === keyArr[i]:
-                        buf.push(
-                            <p key={i} className='default_fronts tags'>
-                                {keyArr[i]} :
-                                {
-                                ((source as any)?.frontmatter[keyArr[i]] as Array<any>)?.map ? 
-
-                                    ((source as any)?.frontmatter[keyArr[i]] as Array<any>)?.map((item, index) => {
-                                        return (
-                                            <span 
-                                                className='mr-[5px] px-[5px] py-[5px] border-[0.5px] border-[var(--foreground-rgb)] rounded-[15px]' 
-                                                key={index}
-                                            >
-                                                {item}
-                                            </span>
-                                        )
-                                    })
-                                :
-
-                                    <span>{(source as any)?.frontmatter[keyArr[i]] as ReactNode}</span>
-
-                                }
-                            </p>
-                        )
-                        break;
-                    default:
-                        buf.push(
-                            <p key={i} className='default_fronts'>
-                                {keyArr[i]}: {(source as any)?.frontmatter[keyArr[i]] as string}
-                            </p>
-                        )
-                }
-            }
-                            
-            }
-            return buf;
-        }
-        else {
-            return [];
-        }
-    }
 
     if ((slug.postRoute[1] && (source as any)?.content === undefined) ||
         (slug.postRoute[0] && postCategoryList.filter((item) => {return item.path === slug.postRoute[0]}).length === 0)
@@ -113,7 +32,7 @@ export default async function BlogPost({ params }) {
     }
     else if (!slug.postRoute[1]){
         return (
-            <div className='flex flex-col h-screen px-[50px] py-[120px] gap-[40px]'>
+            <div className='flex flex-col h-screen px-[50px] py-[50px] gap-[40px]'>
                 <div className='flex flex-col gap-[5px]'>
                     <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[40px] font-extrabold gap-[10px]'>
                         <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
@@ -132,23 +51,16 @@ export default async function BlogPost({ params }) {
                     {
                     (source as any)?.list && 
                     (source as any)?.list.map((item, index) => {
+                        
                         return(
-                            <a
-                                className='flex flex-col justify-center w-full h-[250px] text-[18px] font-semibold border-[0.5px] border-[#4C4C4C] bg-[#393939] rounded-[10px] duration-300 overflow-hidden hover:opacity-50'
-                                href={`/posts/${slug.postRoute[0]}/${item.pageId}`}
+                            <PostCard
                                 key={index}
-                            >
-                                <img
-                                    className='flex h-[calc(100%_-_80px)] rounded-[0px] object-cover'
-                                    src={postCategoryList.find((data) => {return data.path === slug.postRoute[0]})?.thumbnail}
-                                    alt='thumbnail'
-                                />
-
-                                <div className='flex flex-col justify-center h-[80px] px-[20px] py-[10px]'>
-                                    <p className='whitespace-nowrap text-ellipsis overflow-hidden'>{item.title}</p>
-                                    <p className='text-[12px] font-thin'>작성자 : 서호준</p>
-                                </div>
-                            </a>
+                                title={item?.title}
+                                type={slug.postRoute[0]}
+                                pageId={item?.pageId}
+                                thumbnailPath={postCategoryList.find((data) => {return data.path === slug.postRoute[0]})?.thumbnail}
+                                path={`/posts/${item?.type}/${item?.pageId}`}
+                            />
                         )
                     })
                     }
@@ -166,7 +78,7 @@ export default async function BlogPost({ params }) {
                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${thumbnailPath})`
                     }}
                 >
-                    {(source as any)?.content && getKeysAndConvert()?.map((item) => {
+                    {(source as any)?.frontmatter && parseFrontmatter(source)?.map((item) => {
                         return item;
                     })}
                 </div>

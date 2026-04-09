@@ -6,6 +6,5 @@ export interface NavProps {
 
 export interface PageNavProps {
   menuTitle: string,
-  path: string,
-  focused: boolean
+  path: string
 }
