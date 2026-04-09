@@ -111,7 +111,7 @@ export default async function BlogPost({ params }) {
     }
     else if (!slug.postRoute[1]){
         return (
-            <div className='flex flex-col h-screen px-[100px] py-[50px] gap-[40px]'>
+            <div className='flex flex-col h-screen px-[50px] py-[120px] gap-[40px]'>
                 <div className='flex flex-col gap-[5px]'>
                     <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[40px] font-extrabold gap-[10px]'>
                         <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
@@ -157,20 +157,20 @@ export default async function BlogPost({ params }) {
 
     return (
         <Fragment>
-        <div className='flex flex-col gap-[15px]'>
-            <div className={cn('flex flex-col px-[40px] pt-[70px] pb-[45px] gap-[10px] border-[#4c4c4c] border-[0.5px] rounded-[20px] bg-[#2A2A2A]', (source as any)?.content === undefined && "h-[calc(100vh_-_30px)]")}>
+        <div className="flex flex-col mt-[75px] gap-[15px]">
+            <div className={cn(`flex flex-col px-[40px] pt-[70px] pb-[45px] gap-[10px] border-[#4c4c4c] border-[0.5px] rounded-[20px] bg-contain bg-[#2A2A2A]`, (source as any)?.content === undefined && "h-[calc(100vh_-_30px)]")}>
                 <div className='flex flex-col mb-[30px] gap-[5px]'>
                     {(source as any)?.content && getKeysAndConvert()?.map((item) => {
                         return item;
                     })}
                 </div>
                 { (source as any)?.content ? 
-                    (source as any).content 
+                    (source as any).content
                     : 
                     <p className='w-full pb-[45px] text-center text-[#4c4c4c]'>포스트가 없습니다</p>
                 }
             </div>
-            {  (source as any)?.content &&
+            { (source as any)?.content &&
 
                 <div className='flex justify-between w-full h-[80px] gap-[15px]'>
                     <a

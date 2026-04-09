@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type * as d3Types from 'd3'
 import { GraphNode } from '@/types/graph';
 
@@ -46,25 +46,37 @@ function GraphView() {
             .attr("height", height)
             .attr("viewBox", [-width / 2, -height / 2, width, height])
 
+        
+        const zoom = d3
+        .zoom<SVGSVGElement, unknown>()
+        .scaleExtent([0.1, 4])
+        .on('zoom', event => {
+            link.attr('transform', event.transform)
+            node.attr('transform', event.transform)
+        })
+
+        svg.call(zoom)
+
         // Add a line for each link, and a circle for each node.
         const link = svg.append("g")
-            .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.6)
+            .attr("stroke", "#4c4c4c")
+            .attr("stroke-opacity", 1.0)
             .selectAll("line")
             .data(links)
             .join("line")
             .attr("stroke-width", d => Math.sqrt((d as any)?.value));
 
         const node = svg.append("g")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 1.5)
+            .attr("stroke", "#4c4c4c")
+            .attr("stroke-width", 0.5)
             .selectAll("circle")
             .data(nodes)
             .join("circle")
             .attr("r", 5)
-            .attr("fill", d => color((d as any)?.group))
+            .attr("fill", "#d3d3d3")
+            .attr("cursor", "pointer")
             .on('click', (e, d) => {
-                window.open('https://www.naver.com')
+
             })
             .on('mouseon', (e, d) => {
                 
@@ -139,7 +151,10 @@ function GraphView() {
     // invalidation.then(() => simulation.stop());
 
     return (
-        <div className='w-screen h-screen overflow-hidden'>
+        <div className='w-screen h-screen 
+        bg-[linear-gradient(var(--border-dark)_1px,_transparent_1px),_linear-gradient(90deg,_var(--border-dark)_1px,_transparent_1px),_linear-gradient(var(--border-dark)_0px,_transparent_0px),_linear-gradient(90deg,_var(--border-dark)_0px,_var(--background-basic)_0px)]
+        bg-[50px_50px,_50px_50px,_10px_10px,_10px_10px]
+        overflow-hidden'>
             <svg className='chart w-full h-full'></svg>
         </div>
     )

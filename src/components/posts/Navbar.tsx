@@ -29,10 +29,6 @@ export default function Navbar ({
         })
     }
 
-    const handleMouseEvent = (e : MouseEvent) => {
-
-    }
-
     useEffect(() => {
         setInitialFocus();
     }, [location])
@@ -42,10 +38,13 @@ export default function Navbar ({
             {   !isMinimized &&
                 <div className="flex flex-col items-center justify-center px-[30px] pt-[40px] pb-[20px] gap-[10px] border-b-[1px] border-solid border-b-[var(--border-light-dark)]">
                     <img 
-                        className="w-[50%] aspect-square border-[1px] border-solid border-[var(--border-light-dark)] rounded-[50%] object-cover object-top"
+                        className="w-[50%] aspect-square border-[1px] border-solid border-[var(--border-light-dark)] rounded-[50%] object-cover object-top cursor-pointer"
                         src={profileData.imagePath} 
                         alt="profile_1.jpg" 
                         draggable={false}
+                        onClick={() => {
+                            router.push('/about');
+                        }}
                     />
                     <div className="flex flex-col items-center gap-[3px]">
                         <p className="text-[15px] font-bold">{profileData.name}</p>
@@ -57,7 +56,7 @@ export default function Navbar ({
                     <button 
                         className="flex items-center justify-center w-full px-[15px] py-[10px] gap-[10px] text-[var(--foreground-rgb)] rounded-[5px] bg-[var(--background-basic)]"
                         onClick={() => {
-                            window.open(profileData.githubLink, "_self")
+                            window.open(profileData.githubLink)
                         }}
                     >
                         <GithubLogo className="w-[15px] h-[15px] fill-[var(--foreground-rgb)]"/>

@@ -12,8 +12,8 @@ import Footer from "@/components/main/Footer";
 import SkillSection from "@/components/main/SkillSection";
 import ProjectSection from "@/components/main/ProjectSection";
 import PostSection from "@/components/main/PostSection";
-import NavProps from "@/types/navTypes";
 import CareerSection from "@/components/main/CareerSection";
+import { NavProps } from "@/types/navTypes";
 
 export default function Home() {
   const introRef = useRef<HTMLDivElement>(null);

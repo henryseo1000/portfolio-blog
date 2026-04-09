@@ -213,7 +213,8 @@ export async function getDatabasePagelist(path: string) {
                             buf.push({
                                 title: item?.properties[titleKey].title[0].plain_text,
                                 pageId: item?.id,
-                                type: path
+                                type: path,
+                                thumbnailPath: postCategoryList[i].thumbnail
                             })
                         }
                     }
@@ -327,7 +328,8 @@ export async function getAllPosts() {
                             buf.push({
                                 title: item?.properties[titleKey].title[0].plain_text,
                                 pageId: item?.id,
-                                type: path
+                                type: postCategoryList[i].path,
+                                thumbnailPath: postCategoryList[i].thumbnail
                             })
                         }
                     }

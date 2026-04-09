@@ -7,9 +7,9 @@ import ProgressBar from "../posts/ProgressBar";
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
-import NavProps from '@/types/navTypes';
 import { postCategoryList } from '@/data/postCategory';
 import { useRouter } from 'next/navigation';
+import { NavProps } from '@/types/navTypes';
 
 function MainNav({ menuList } : { menuList : NavProps[]}) {
     const [focusedMenu, setFocusedMenu] = useState<number>(0); 
@@ -87,9 +87,9 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
             </div>
 
             <div 
-                className={cn('w-full h-0 duration-300 overflow-hidden', isTriggered && "h-[150px]")}
+                className={cn('w-full h-0 box-border duration-300 overflow-hidden', isTriggered && "h-[150px]")}
                 ref={ref}
-                onMouseLeave={()=>{
+                onMouseLeave={(e)=>{
                     if (isTriggered) {
                         handleScroll()
                         setTriggered(false)
@@ -97,7 +97,7 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
                 }}
             >
                 <div
-                    className={cn("grid grid-cols-3 min-h-[150px] items-center justify-center")}
+                    className={cn("grid grid-cols-3 min-h-[150px] items-center justify-center py-[15px]")}
                 >
                 {postCategoryList.map((item, index) => {
                     return (

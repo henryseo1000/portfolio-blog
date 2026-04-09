@@ -1,5 +1,10 @@
-export default function Projects() {
-    return <div>
-        This is Projects Page
-    </div>
+import GraphView from "@/components/projects/GraphView";
+
+export default async function Projects() {
+    
+    return (
+        <div>
+            <GraphView/>
+        </div>
+    )
 }

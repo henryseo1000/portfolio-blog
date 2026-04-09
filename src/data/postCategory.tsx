@@ -1,5 +1,5 @@
 import postCategoryProps from "@/types/postCategoryTypes";
-import { Cpu, Database, GitGraph, Monitor, PanelsTopLeft, Server, Settings } from "lucide-react"
+import { Cpu, Database, FlaskConical, GitGraph, Monitor, PanelsTopLeft, Server, Settings } from "lucide-react"
 
 export const postCategoryList : postCategoryProps[] = [
     {
@@ -51,4 +51,11 @@ export const postCategoryList : postCategoryProps[] = [
         path: "atmega-128",
         thumbnail: '/thumbnails/atmega-128-thumbnail.png'
     },
+    {
+        title: "Labs",
+        icon: <FlaskConical width={17}/>,
+        database_id: "75090cabc01b4a6586f208fcde1d5cc6",
+        path: "labs",
+        thumbnail: '/thumbnails/labs-thumbnail.png'
+    }
 ]

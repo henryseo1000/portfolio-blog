@@ -36,7 +36,7 @@ function ProgressBar({ position = "top", barColor = "#b3b3b3" } : ProgressBarPro
 
     return (
         <div 
-            className={cn(`left-0 max-w-full border-[1.5px]`, position === "top" ? "fixed top-0" : "absolute bottom-0", barColor && `border-[#b3b3b3]`)}
+            className={cn(`left-0 max-w-full border-[1.5px] z-[15]`, position === "top" ? "fixed top-0" : "absolute bottom-0", barColor && `border-[#b3b3b3]`)}
             ref={barRef}
         />
     )

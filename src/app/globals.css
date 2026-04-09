@@ -30,7 +30,7 @@
     --background-light: #3E3E3E;
     --border-light: #B3B3B3;
     --border-light-dark: #4C4C4C;
-    --border-dark: #4D4D4D;
+    --border-dark: #393939;
     --swiper-pagination-color: var(--foreground-rgb);
     --swiper-pagination-bullet-inactive-opacity: 1
     --swiper-pagination-bullet-active-opacity: 1
@@ -43,7 +43,7 @@ html {
 
 body {
   color: var(--foreground-rgb);
-  background-color: var(--background-plain);
+  background-color: var(--background-basic);
 }
 
 .swiper-pagination-bullet-active {

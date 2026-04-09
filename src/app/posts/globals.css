@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--background-basic);
+    line-height: 1.5;
 }
 
 section {
@@ -49,12 +50,6 @@ p {
 
 p a {
     text-decoration: underline;
-}
-
-p:has(img) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 blockquote {
@@ -131,14 +126,16 @@ img {
     border-radius: 10px;
 }
 
-ul {
-    display: flex;
-    flex-direction: column;
+p img {
+    display: inline-block;
+}
+
+ul, ol {
+    word-break: keep-all;
     gap: 5px;
 }
 
 li ul {
-    display: flex;
     flex-direction: column;
     gap: 5px;
 }
