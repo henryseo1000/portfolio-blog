@@ -8,6 +8,7 @@ import { Fragment, ReactNode } from 'react';
 import { Clipboard } from 'lucide-react';
 import Comments from '@/components/posts/Comments';
 import { postCategoryList } from '@/data/postCategory';
+import { div } from 'three/src/nodes/math/OperatorNode.js';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -15,6 +16,7 @@ export default async function BlogPost({ params }) {
         await notionToPage(slug.postRoute[0], slug.postRoute[1]) 
         : 
         await getDatabasePagelist(slug.postRoute[0])
+    const thumbnailPath = postCategoryList.find((item) => {return item.path === slug.postRoute[0]})?.thumbnail
     
     const getKeysAndConvert = () => {
         if ((source as any)?.frontmatter) {
@@ -157,15 +159,21 @@ export default async function BlogPost({ params }) {
 
     return (
         <Fragment>
-        <div className="flex flex-col mt-[75px] gap-[15px]">
-            <div className={cn(`flex flex-col px-[40px] pt-[70px] pb-[45px] gap-[10px] border-[#4c4c4c] border-[0.5px] rounded-[20px] bg-contain bg-[#2A2A2A]`, (source as any)?.content === undefined && "h-[calc(100vh_-_30px)]")}>
-                <div className='flex flex-col mb-[30px] gap-[5px]'>
+        <div className="flex flex-col gap-[15px]">
+            <div className={cn(`flex flex-col border-[#4c4c4c] border-[0.5px] rounded-[20px]  bg-[#2A2A2A] overflow-hidden`, (source as any)?.content === undefined && "h-[calc(100vh_-_30px)]")}>
+                <div className={cn('flex flex-col px-[30px] py-[50px] gap-[5px] bg-cover bg-no-repeat bg-[≈]')}
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${thumbnailPath})`
+                    }}
+                >
                     {(source as any)?.content && getKeysAndConvert()?.map((item) => {
                         return item;
                     })}
                 </div>
                 { (source as any)?.content ? 
-                    (source as any).content
+                    <div className='flex flex-col px-[40px] pt-[30px] pb-[45px] gap-[10px]'>
+                        {(source as any).content}
+                    </div>
                     : 
                     <p className='w-full pb-[45px] text-center text-[#4c4c4c]'>포스트가 없습니다</p>
                 }

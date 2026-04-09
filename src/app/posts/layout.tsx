@@ -19,7 +19,6 @@ export default function PageLayout({
 
   return (
       <section className={cn(isMini ? "pl-[110px]" : "pl-[280px]")}>
-        <PageNav menuList={[{menuTitle: "Projects View", path: "/projects", focused: true}, {menuTitle: "토이프로젝트 2025] 테스트", path: "projects/1", focused: false}]}/>
         <ProgressBar position="top"/>
         <Navbar isMinimized={isMini} setIsMinimized={setIsMini}/>
         <Suspense>
