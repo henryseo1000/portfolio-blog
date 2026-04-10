@@ -5,6 +5,7 @@ export interface GraphNode extends d3.SimulationNodeDatum {
   label: string
   group: 'post' | 'tag'
   category?: string
+  projectNum?: number
   x?: number
   y?: number
   vx?: number

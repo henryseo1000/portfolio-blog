@@ -350,3 +350,52 @@ export async function getAllPosts(input : string = "") {
 
     return { list : buf, totalNum: buf.length }
 }
+
+export async function allPagesForProject() {
+    const notionClient = new Client({ auth: process.env.NOTION_TOKEN });
+    const buf = [];
+
+    for(let i = 0; i < projectsList.length; i++){
+        
+        const dbObject = await notionClient.databases.retrieve({ database_id: "e975da6fc4f3451b958271228c983454" })
+        .then(async (data) => {
+            
+            if ((data as any).data_sources[0]) {
+
+                const response = await notionClient.dataSources.query({
+                    data_source_id: (data as any).data_sources[0]?.id,
+                    filter : {
+                        'property': 'Project',
+                        'relation': {'contains' : projectsList[i]?.uuid}
+                    }
+                })
+                
+                return response;
+            }
+        })
+
+        if ((dbObject as any)?.results) {
+
+            (dbObject as any).results.map((item, index) => {
+                
+                if (item?.properties) {
+                    const keyArr = Object.keys(item.properties)
+                            
+                    if (keyArr.length > 0) {
+                        const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
+                        const tags = item?.properties["Tags"]["multi_select"].map((item) => {return item.name})
+
+                        buf.push({
+                            title: item?.properties[titleKey].title[0].plain_text,
+                            pageId: item?.id,
+                            type: tags,
+                            projectNum: i + 1
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    return { list : buf, totalNum: buf.length }
+}
