@@ -4,16 +4,25 @@ import { useEffect, useRef, useState } from 'react'
 import type * as d3Types from 'd3'
 import { GraphNode } from '@/types/graph';
 import { useRouter } from 'next/navigation';
+import { GraphLink } from '@/types/graphTypes';
+import { ProjectProps } from '@/types/projectTypes';
+
+interface GraphViewProps {
+  projects: ProjectProps[]
+  initialNodes: GraphNode[]
+  initialLinks: GraphLink[]
+}
 
 function GraphView() {
     const [isD3Loaded, setIsD3Loaded] = useState(false);
     const d3Ref = useRef<typeof d3Types | null>(null);
+    const [selectedPost, setSelectedPost] = useState<string | null>(null);
     const router = useRouter();
 
     useEffect(() => {
         import('d3').then(d3Module => {
-        d3Ref.current = d3Module
-        setIsD3Loaded(true)
+            d3Ref.current = d3Module
+            setIsD3Loaded(true)
         })
     }, [isD3Loaded])
 
@@ -26,9 +35,6 @@ function GraphView() {
         // Specify the dimensions of the chart.
         const width = 928;
         const height = 680;
-
-        // Specify the color scale.
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         // The force simulation mutates links and nodes, so create a copy
         // so that re-evaluating this cell produces the same result.
@@ -48,19 +54,39 @@ function GraphView() {
             .attr("height", height)
             .attr("viewBox", [-width / 2, -height / 2, width, height])
 
-        
+        const g = svg.append("g");
+
         const zoom = d3
         .zoom<SVGSVGElement, unknown>()
         .scaleExtent([0.1, 4])
-        .on('zoom', event => {
-            link.attr('transform', event.transform)
-            node.attr('transform', event.transform)
-        })
+        .on('zoom', event => g.attr('transform', event.transform))
 
         svg.call(zoom)
 
+        // Edge gradient definition for visual depth
+        const defs = svg.append('defs')
+
+        const edgeGradient = defs.append('linearGradient')
+        .attr('id', 'edge-gradient')
+        .attr('gradientUnits', 'userSpaceOnUse')
+
+        edgeGradient.append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', '#3b82f6')
+        .attr('stop-opacity', 0.6)
+
+        edgeGradient.append('stop')
+        .attr('offset', '50%')
+        .attr('stop-color', '#60a5fa')
+        .attr('stop-opacity', 0.3)
+
+        edgeGradient.append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', '#3b82f6')
+        .attr('stop-opacity', 0.6)
+
         // Add a line for each link, and a circle for each node.
-        const link = svg.append("g")
+        const link = g
             .attr("stroke", "#4c4c4c")
             .attr("stroke-opacity", 1.0)
             .selectAll("line")
@@ -68,7 +94,7 @@ function GraphView() {
             .join("line")
             .attr("stroke-width", d => Math.sqrt((d as any)?.value));
 
-        const node = svg.append("g")
+        const node = g
             .attr("stroke", "#4c4c4c")
             .attr("stroke-width", 0.5)
             .selectAll("circle")
@@ -100,10 +126,17 @@ function GraphView() {
             d.fx = null
             d.fy = null
           })
+          
       )
 
-        node.append("title")
-            .text(d => (d as any)?.id);
+        node.append("text")
+            .text(d => (d as any)?.id)
+            .attr('dx', 14)
+            .attr('dy', 4)
+            .attr('fill', '#52525b')
+            .attr('font-size', '9px')
+            .attr('font-family', 'Space Grotesk')
+            .attr('class', 'pointer-events-none select-none uppercase tracking-widest')
 
         // Add a drag behavior.
         node.call(d3.drag()
@@ -157,7 +190,7 @@ function GraphView() {
         bg-[linear-gradient(var(--border-dark)_1px,_transparent_1px),_linear-gradient(90deg,_var(--border-dark)_1px,_transparent_1px),_linear-gradient(var(--border-dark)_0px,_transparent_0px),_linear-gradient(90deg,_var(--border-dark)_0px,_var(--background-basic)_0px)]
         bg-[50px_50px,_50px_50px,_10px_10px,_10px_10px]
         overflow-hidden'>
-            <svg className='chart w-full h-full'></svg>
+            <svg className='chart w-full h-full cursor-grab active:cursor-grabbing'></svg>
         </div>
     )
 }

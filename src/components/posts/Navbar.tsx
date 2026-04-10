@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { postCategoryList } from "@/data/postCategory";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
-import { ArrowLeftIcon, Minimize } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 
 export default function Navbar ({ 
         isMinimized, 
@@ -34,7 +34,7 @@ export default function Navbar ({
     }, [location])
 
     return (
-        <nav className={cn("flex flex-col fixed left-[15px] w-[250px] h-[calc(100%-30px)] gap-[5px] rounded-[20px] border-[#4C4C4C] border-[1px] bg-[#393939] duration-500 overflow-hidden", isMinimized && "w-[80px] h-[400px]")}>
+        <nav className={cn("flex flex-col fixed left-[15px] w-[250px] h-[calc(100%-30px)] rounded-[20px] border-[#4C4C4C] border-[1px] bg-[#393939] duration-500 overflow-hidden", isMinimized && "w-[80px] h-[400px]")}>
             {   !isMinimized &&
                 <div className="flex flex-col items-center justify-center px-[30px] pt-[40px] pb-[20px] gap-[10px] border-b-[1px] border-solid border-b-[var(--border-light-dark)]">
                     <img 
@@ -65,7 +65,7 @@ export default function Navbar ({
                 </div>
             }
 
-            <div className="flex flex-col max-h-full pb-[5px] overflow-y-scroll">
+            <div className="flex flex-col h-full pb-[80px] overflow-y-scroll">
                 {
                     postCategoryList.map((item, index) => {
                         return (
@@ -96,12 +96,10 @@ export default function Navbar ({
             </div>
 
             <div 
-                className={cn("flex flex-col items-center justify-center bottom-0 w-full h-[120px] gap-[20px] bg-[#393939]",
-                    isMinimized && "py-[-px]"
-                )}
+                className={cn("flex flex-col absolute items-center justify-center bottom-0 w-full h-[80px] gap-[20px] bg-[#393939]")}
             >
                 <button
-                    className={cn("flex items-center justify-center px-[15px] py-[10px] gap-[5px] rounded-[20px] bg-[var(--border-light-dark)]",
+                    className={cn("flex items-center justify-center px-[15px] py-[5px] gap-[5px] rounded-[20px] bg-[var(--border-light-dark)]",
                         isMinimized && "px-[10px] py-[5px]"
                     )}
                     onClick={() => {
@@ -112,7 +110,7 @@ export default function Navbar ({
                     {!isMinimized && <p className="text-[12px]">Back to main</p>}
                 </button>
                 <div 
-                    className={cn("relative bottom-[10px] w-[80px] h-[4px] rounded-[2px] bg-[var(--border-light)] duration-1000 cursor-pointer hover:scale-[1.1]",
+                    className={cn("relative bottom-[10px] w-[80px] h-[4px] rounded-[2px] bg-[var(--border-light)] duration-1000 cursor-col-resize hover:scale-[1.1]",
                         isMinimized && "w-[30px]"
                     )}
                     onClick={() => {

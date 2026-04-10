@@ -9,7 +9,7 @@ function ProjectSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
   const router = useRouter();
 
   return (
-    <div ref={ref} className='flex flex-col justify-center w-screen h-[calc(100vh_+_300px)] px-[100px] py-[200px] gap-[10px] bg-[var(--background-plain)]'>
+    <div ref={ref} className='flex flex-col justify-center w-screen h-screen px-[100px] py-[200px] gap-[50px] bg-[var(--background-plain)]'>
       <p 
         data-aos="fade-top"
         className='text-[48px] font-extrabold'
@@ -66,7 +66,7 @@ function ProjectSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
         data-aos="fade-top"
       >
         <MainButton
-          text="Projects"
+          text="See More Projects"
           onClick={() => {
             router.push('/projects')
           }}

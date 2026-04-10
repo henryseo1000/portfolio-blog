@@ -34,7 +34,7 @@ const parseFrontmatter = (source) => {
                         break;
 
                     case "Name" === keyArr[i] ||  "이름" === keyArr[i]:
-                        buf = [<h1 key={i} className='default_fronts title'>{(source as any)?.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
+                        buf = [<h1 key={i} className='default_fronts title text-center'>{(source as any)?.frontmatter[keyArr[i]] as string}</h1>].concat(buf)
                         break;
 
                     case "Assign" === keyArr[i]:

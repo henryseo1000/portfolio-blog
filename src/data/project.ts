@@ -1,4 +1,4 @@
-import ProjectProps from "@/types/projectTypes";
+import { ProjectProps } from "@/types/projectTypes";
 
 const projectsList : ProjectProps[] = [
     {
@@ -21,7 +21,7 @@ const projectsList : ProjectProps[] = [
     },
     {
         title: "2026 개인 프로젝트 #1] Vercel + NextJS로 포트폴리오/블로그 페이지 만들기",
-        description: '개인 포트폴리오/블로그를 Next JS로 제작하고 Vercel을 이용해 배포하였습니다.',
+        description: '템플릿 없이 직접 디자인해 만드는 개인 포트폴리오/블로그입니다. Next JS로 제작하고 Vercel을 이용해 배포하였습니다.',
         tagList: ["TS", "NextJS", "Vercel"],
         uuid : "f2825ac744a947c0ae87db8d5011ede9",
         thumbnailPath: "/thumbnails/project-3-thumbnail.png",
@@ -31,7 +31,8 @@ const projectsList : ProjectProps[] = [
         title: "2026 토이 프로젝트] Playground",
         description: 'Github Pages를 이용해 만드는 나만의 웹 실험실',
         tagList: ["JS", "HTML", "CSS"],
-        uuid : "33a7aafbf4aa80e4b94eebe97391a684"
+        uuid : "33a7aafbf4aa80e4b94eebe97391a684",
+        link: "https://henryseo1000.github.io"
     },
 ]
 

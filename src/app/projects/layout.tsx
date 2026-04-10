@@ -1,6 +1,10 @@
 'use client';
 
 import PageNav from "@/components/common/PageNav";
+import { Suspense } from "react";
+import Loading from "../loading";
+import {Provider} from 'react-redux'
+import store from "@/store";
 
 export default function ProjectsLayout({
   children,
@@ -10,9 +14,13 @@ export default function ProjectsLayout({
   return (
       <section>
         <PageNav/>
-        <div className="children">
-          {children}
-        </div>
+        <Suspense fallback={<Loading/>}>
+          <Provider store={store}>
+            <div>
+              {children}
+            </div>
+          </Provider>
+        </Suspense>
       </section>
   );
 }

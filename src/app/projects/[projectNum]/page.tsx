@@ -1,4 +1,5 @@
 import { getPagelistByProject } from '@/api/search/route';
+import DataSetter from '@/components/common/DataSetter';
 import PostCard from '@/components/common/PostCard';
 import projectsList from '@/data/project';
 import { Link2 } from 'lucide-react';
@@ -55,6 +56,10 @@ async function ProjectPage({ params }) {
                     })
                 }
             </div>
+            <DataSetter 
+                path={`projects/${slug.projectNum}`}
+                storeDataList={source?.list}
+            />
         </div>
     )
 }

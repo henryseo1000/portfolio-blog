@@ -8,3 +8,9 @@ export interface PageNavProps {
   menuTitle: string,
   path: string
 }
+
+export interface PageDataType {
+    path?: string;
+    storeDataList?: any[];
+    currentData?: any;
+}

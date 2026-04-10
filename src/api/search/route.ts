@@ -288,11 +288,12 @@ export async function getPagelistByProject( projectNum : number ) {
                         
                 if (keyArr.length > 0) {
                     const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
+                    const tags = item?.properties["Tags"]["multi_select"].map((item) => {return item.name})
 
                     buf.push({
                         title: item?.properties[titleKey].title[0].plain_text,
                         pageId: item?.id,
-                        type: path,
+                        type: tags,
                         projectNum: projectNum
                     })
                 }

@@ -74,7 +74,7 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
                 언젠가 혁신적인 아이디어로 세상을 바꿀 수 있는 무언가를 만드는 것이 꿈입니다.
               </p>
               <MainButton 
-                text={"About me"} 
+                text={"More About me"} 
                 onClick={() => {
                   router.push("about")
                 }}

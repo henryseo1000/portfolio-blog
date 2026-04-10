@@ -4,11 +4,10 @@ import ArrowLeft from "../../../../public/svg/arrowLeft.svg";
 import ArrowRight from "../../../../public/svg/arrowRight.svg";
 
 import { cn } from '@/utils/cn';
-import { Fragment, ReactNode } from 'react';
+import { Fragment } from 'react';
 import { Clipboard } from 'lucide-react';
 import Comments from '@/components/posts/Comments';
 import { postCategoryList } from '@/data/postCategory';
-import { div } from 'three/src/nodes/math/OperatorNode.js';
 import PostCard from '@/components/common/PostCard';
 import parseFrontmatter from '@/utils/parseFrontmatter';
 
@@ -32,7 +31,7 @@ export default async function BlogPost({ params }) {
     }
     else if (!slug.postRoute[1]){
         return (
-            <div className='flex flex-col h-screen px-[50px] py-[50px] gap-[40px]'>
+            <div className='flex flex-col h-screen px-[30px] pt-[15px] pb-[50px] gap-[40px]'>
                 <div className='flex flex-col gap-[5px]'>
                     <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[40px] font-extrabold gap-[10px]'>
                         <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
@@ -73,9 +72,9 @@ export default async function BlogPost({ params }) {
         <Fragment>
         <div className="flex flex-col gap-[15px]">
             <div className={cn(`flex flex-col border-[#4c4c4c] border-[0.5px] rounded-[20px]  bg-[#2A2A2A] overflow-hidden`, (source as any)?.content === undefined && "h-[calc(100vh_-_30px)]")}>
-                <div className={cn('flex flex-col px-[30px] py-[50px] gap-[5px] bg-cover bg-no-repeat bg-[≈]')}
+                <div className={cn('flex flex-col px-[50px] py-[50px] gap-[5px] bg-cover bg-no-repeat')}
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${thumbnailPath})`
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${thumbnailPath})`
                     }}
                 >
                     {(source as any)?.frontmatter && parseFrontmatter(source)?.map((item) => {

@@ -1,4 +1,4 @@
-export default interface ProjectProps {
+export interface ProjectProps {
     title: string;
     description: string;
     tagList: string[];
@@ -7,4 +7,17 @@ export default interface ProjectProps {
     gitRepo?: string;
     link?: string;
     onClick?: () => void;
+    relatedPosts?: string[];
+}
+
+export interface ProjectSlug {
+    title: string;
+    pageId: string;
+    type: Array<string>;
+    projectNum: number;
+}
+
+export interface ProjectSource {
+    list?: ProjectSlug[];
+    totalNum?: number;
 }
