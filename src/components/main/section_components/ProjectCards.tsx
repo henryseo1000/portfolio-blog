@@ -1,6 +1,6 @@
 'use client';
 
-import ProjectProps from '@/types/projectTypes';
+import { ProjectProps } from "@/types/projectTypes";
 
 function ProjectCards({title = "", description, tagList = [""], onClick} : ProjectProps) {
 
