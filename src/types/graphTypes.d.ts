@@ -3,7 +3,7 @@ import type * as d3 from 'd3';
 export interface GraphNode extends d3.SimulationNodeDatum {
   id: string
   label: string
-  group: 'post' | 'tag'
+  group: 'post' | 'tag' | 'title'
   category?: string
   projectNum?: number
   x?: number
