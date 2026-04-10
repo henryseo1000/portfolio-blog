@@ -12,15 +12,17 @@ export default function ProjectsLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <Provider store={store}>
       <section>
         <PageNav/>
         <Suspense fallback={<Loading/>}>
-          <Provider store={store}>
+          
             <div>
               {children}
             </div>
-          </Provider>
+          
         </Suspense>
       </section>
+      </Provider>
   );
 }

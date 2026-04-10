@@ -29,4 +29,4 @@ function DataSetter({ path, storeDataList, currentData } : DataSetterProps) {
     )
 }
 
-export default DataSetter
+export default DataSetter;

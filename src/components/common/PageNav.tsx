@@ -1,24 +1,28 @@
 'use client';
 
 import projectsList from "@/data/project";
+import { RootState } from "@/store";
 import { PageNavProps } from "@/types/navTypes";
 import { cn } from "@/utils/cn";
 
 import { Command, Search, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function PageNav() {
     const [menus, setMenus] = useState<PageNavProps[]>([]);
     const [focused, setFocused] = useState<number>();
     const [open, setOpen] = useState<boolean>(false);
     const [searchInput, setSearchInput] = useState<string>("");
+    const [filteredList, setFilteredList] = useState<any[]>([]);
 
     const searchParams = useSearchParams();
     const location = usePathname();
     const router = useRouter();
     
     const dialogRef = useRef<HTMLDialogElement>();
+    const storedData = useSelector((state: RootState) => state.pageData.storeDataList)
 
     const handleLocation = async () => {
         const buf = []
@@ -83,12 +87,14 @@ function PageNav() {
     }, [open])
 
     useEffect(() => {
-
-    }, [focused, menus]);
-
-    useEffect(() => {
         handleLocation();
     }, [location])
+
+    useEffect(() => {
+        setFilteredList(storedData.filter((item) => {
+            return item?.title?.toLowerCase().replace(' ', '').includes(searchInput)
+        }))
+    },[searchInput])
 
     return (
         <div className='flex fixed items-center justify-between top-0 w-full h-[75px] px-[30px] border-b-[0.5px] border-b-[var(--background-basic-light)] bg-[rgba(0,0,0,0.2)] backdrop-blur-3xl z-10'>
@@ -164,7 +170,7 @@ function PageNav() {
             >   
                 <div>
                     <input
-                        className="w-full h-[60px] px-[30px] text-[15px] text-[var(--foreground-rgb)] border-b-[0.5px] border-[var(--border-light-dark)] bg-transparent outline-none focus:outline-none"
+                        className="w-full h-[60px] px-[30px] text-[20px] text-[var(--foreground-rgb)] border-b-[0.5px] border-[var(--border-light-dark)] bg-transparent outline-none focus:outline-none"
                         type="text"
                         placeholder="검색할 내용을 입력하세요..."
                         onChange={(e) => {
@@ -172,8 +178,29 @@ function PageNav() {
                         }}
                         value={searchInput}
                     />
-                    <div>
-                        
+                    <div
+                        className="flex flex-col w-full h-[340px] overflow-scroll"
+                    >
+                        {filteredList.map((item, index) => {
+                            return(
+                                <p
+                                    className="flex w-full px-[30px] py-[15px] text-[var(--border-light)] duration-300 select-none cursor-pointer hover:bg-[var(--border-dark)]"
+                                    key={index}
+                                    onClick={() => {
+                                        router.push('/projects' + "/1/" + item?.pageId + '?title=' + item?.title);
+                                        if(dialogRef.current) {
+                                            setOpen(!open);
+                                            setTimeout(() => {
+                                                dialogRef.current.close();
+                                                document.body.classList.remove('overflow-hidden');
+                                            }, 300)
+                                        }
+                                    }}
+                                >
+                                    {item?.title}
+                                </p>
+                            )
+                        })}
                     </div>
                 </div>
                 <button

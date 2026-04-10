@@ -1,4 +1,5 @@
 import { getPagelistByProject } from "@/api/search/route";
+import DataSetter from "@/components/common/DataSetter";
 import GraphView from "@/components/projects/GraphView";
 import { ProjectSource } from "@/types/projectTypes";
 import generateGraphData from "@/utils/generateGraphData";
@@ -19,6 +20,10 @@ export default async function Projects() {
     return (
         <div>
             <GraphView/>
+            <DataSetter
+                path="projects"
+                storeDataList={projectSource?.list ? projectSource?.list : []}
+            />
         </div>
     )
 }
