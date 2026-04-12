@@ -49,6 +49,7 @@ async function ProjectPage({ params }) {
                                 title={item?.title}
                                 thumbnailPath={projectsList[Number(slug.projectNum) - 1].thumbnailPath}
                                 pageId={item?.pageId}
+                                date={item?.date}
                                 type={item?.type}
                                 path={`/projects/${item?.projectNum}/${item.pageId}`}
                             />

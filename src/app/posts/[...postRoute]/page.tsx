@@ -10,6 +10,7 @@ import Comments from '@/components/posts/Comments';
 import { postCategoryList } from '@/data/postCategory';
 import PostCard from '@/components/common/PostCard';
 import parseFrontmatter from '@/utils/parseFrontmatter';
+import DataSetter from '@/components/common/DataSetter';
 
 export default async function BlogPost({ params }) {
     const slug = await params;
@@ -33,14 +34,14 @@ export default async function BlogPost({ params }) {
         return (
             <div className='flex flex-col h-screen px-[30px] pt-[15px] pb-[50px] gap-[40px]'>
                 <div className='flex flex-col gap-[5px]'>
-                    <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[40px] font-extrabold gap-[10px]'>
+                    <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[30px] font-extrabold gap-[10px]'>
                         <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
                         <p>관련 포스트 조회 결과</p>
                     </div>
 
                     <div className='flex items-center text-[var(--border-light)]'>
-                        <Clipboard height={16}/>
-                        <p className='font-light'>
+                        <Clipboard height={12}/>
+                        <p className='text-[12px] font-light'>
                             Total Posts found : {source.totalNum}
                         </p>  
                     </div>
@@ -57,6 +58,7 @@ export default async function BlogPost({ params }) {
                                 title={item?.title}
                                 type={slug.postRoute[0]}
                                 pageId={item?.pageId}
+                                date={item?.date}
                                 thumbnailPath={postCategoryList.find((data) => {return data.path === slug.postRoute[0]})?.thumbnail}
                                 path={`/posts/${item?.type}/${item?.pageId}`}
                             />
@@ -64,6 +66,9 @@ export default async function BlogPost({ params }) {
                     })
                     }
                 </div>
+                <DataSetter
+                    storeDataList={(source as any)?.list ? (source as any).list : []}
+                />
             </div>
         )
     }

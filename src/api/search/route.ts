@@ -11,6 +11,7 @@ import rehypePrismPlus from "rehype-prism-plus"
 import rehypeCodeTitles from "rehype-code-titles"
 import { postCategoryList } from "@/data/postCategory";
 import projectsList from "@/data/project";
+import dateToString from "@/utils/dateToString";
 
 const POST_FOLDER_NAME = "src/app/posts/database/(markdowns)";
 const POSTS_DIRECTORY = path.join(process.cwd(), POST_FOLDER_NAME);
@@ -186,7 +187,6 @@ export async function getDatabasePagelist(path: string, input : string = "") {
                             },
                         ]
                     })
-                    console.log(response)
                     return response;
                 }
             })
@@ -214,6 +214,7 @@ export async function getDatabasePagelist(path: string, input : string = "") {
                                 title: item?.properties[titleKey].title[0].plain_text,
                                 pageId: item?.id,
                                 type: path,
+                                date: dateToString(item?.created_time),
                                 thumbnailPath: postCategoryList[i].thumbnail
                             })
                         }
@@ -287,13 +288,15 @@ export async function getPagelistByProject( projectNum : number ) {
                 const keyArr = Object.keys(item.properties)
                         
                 if (keyArr.length > 0) {
-                    const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
-                    const tags = item?.properties["Tags"]["multi_select"].map((item) => {return item.name})
+                    const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"});
+
+                    const tags = item?.properties["Tags"]["multi_select"].map((item) => {return item.name});
 
                     buf.push({
                         title: item?.properties[titleKey].title[0].plain_text,
                         pageId: item?.id,
                         type: tags,
+                        date: dateToString(item?.created_time),
                         projectNum: projectNum
                     })
                 }
@@ -340,6 +343,7 @@ export async function getAllPosts(input : string = "") {
                                 title: item?.properties[titleKey].title[0].plain_text,
                                 pageId: item?.id,
                                 type: postCategoryList[i].path,
+                                date: dateToString(item?.created_time),
                                 thumbnailPath: postCategoryList[i].thumbnail
                             })
                         }
@@ -369,6 +373,7 @@ export async function allPagesForProject() {
                         'relation': {'contains' : projectsList[i]?.uuid}
                     }
                 })
+                console.log(response)
                 
                 return response;
             }
@@ -382,13 +387,14 @@ export async function allPagesForProject() {
                     const keyArr = Object.keys(item.properties)
                             
                     if (keyArr.length > 0) {
-                        const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"})
-                        const tags = item?.properties["Tags"]["multi_select"].map((item) => {return item.name})
+                        const titleKey = keyArr.find((key) => {return item.properties[key].type === "title"});
 
+                        const tags = item?.properties["Tags"]["multi_select"].map((item) => {return item.name});
                         buf.push({
                             title: item?.properties[titleKey].title[0].plain_text,
                             pageId: item?.id,
                             type: tags,
+                            date: dateToString(item?.created_time),
                             projectNum: i + 1
                         })
                     }

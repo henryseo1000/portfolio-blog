@@ -10,7 +10,7 @@ async function ProjectPost({ params }) {
     return (
         <div className="flex flex-col pb-[50px] gap-[30px]">
             <div 
-                className="flex flex-col px-[30px] pt-[110px] pb-[25px] gap-[5px]"
+                className="flex flex-col px-[100px] pt-[110px] pb-[25px] gap-[5px]"
                 style={{
                         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/thumbnails/project-1-thumbnail.png")`
                     }}

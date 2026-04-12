@@ -10,6 +10,7 @@ import { cn } from "@/utils/cn";
 import { postCategoryList } from '@/data/postCategory';
 import { useRouter } from 'next/navigation';
 import { NavProps } from '@/types/navTypes';
+import { Info, InfoIcon, SquareArrowOutUpRight } from 'lucide-react';
 
 function MainNav({ menuList } : { menuList : NavProps[]}) {
     const [focusedMenu, setFocusedMenu] = useState<number>(0); 
@@ -43,7 +44,7 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
     return (
         <div className={cn('flex flex-col fixed top-0 w-full pt-[20px] border-b-[rgba(0,0,0,0)] z-20 duration-1000', change && "bg-[var(--foreground-rgb)] border-b-[0.5px] border-b-[var(--border-light)]")}>
             <ProgressBar position="bottom"/>
-            <div className={cn("flex items-center justify-between px-[50px] pb-[20px]", change && "border-b-[0.5px] border-b-[var(--border-light)]")}>
+            <div className={cn("flex items-center justify-between px-[40px] pb-[20px]", change && "border-b-[0.5px] border-b-[var(--border-light)]")}>
                 <LogoDark/>
 
                 <div className="flex px-[15px] py-[5px] gap-[40px]">
@@ -81,8 +82,9 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
                     })}
                 </div>
 
-                <button className="flex items-center justify-center w-[30px] h-[30px] border-[0.5px] border-solid border-[var(--background-plain)] rounded-[5px] bg-[var(--foreground-rgb)]">
-                    <Sun />
+                <button className={cn("flex items-center justify-center px-[12px] py-[8px] gap-[5px] text-[var(--background-plain)] rounded-[10px] bg-[var(--foreground-rgb)] duration-300 hover:opacity-70", change && "text-[var(--foreground-rgb)] bg-[var(--background-plain)]")}>
+                    <p className='text-[15px]'>Page Info</p>
+                    <Info height={17}/>
                 </button>
             </div>
 

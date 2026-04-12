@@ -16,13 +16,11 @@ export default function ProjectsLayout({
       <section>
         <PageNav/>
         <Suspense fallback={<Loading/>}>
-          
             <div>
               {children}
             </div>
-          
         </Suspense>
       </section>
-      </Provider>
+    </Provider>
   );
 }

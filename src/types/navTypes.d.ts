@@ -1,7 +1,8 @@
 export interface NavProps {
   title: string,
   ref: MutableRefObject<HTMLDivElement>,
-  isVisible?: boolean
+  isVisible?: boolean,
+  path?: string
 }
 
 export interface PageNavProps {

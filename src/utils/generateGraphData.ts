@@ -7,9 +7,17 @@ const generateGraphData = (source : ProjectSource) => {
     const nodes : GraphNode[] = [];
     const links : GraphLink[] = [];
 
+    nodes.push({
+        id: "root",
+        label: "Projects",
+        group: 'root'
+    })
+
     if (source?.list) {
         for (let i  = 0; i < projectsList.length; i++) {
             const tagsSet = new Set<string>();
+
+            links.push({ source: "root", target: `project-${i + 1}` })
 
             nodes.push({
                 id: `project-${i + 1}`,

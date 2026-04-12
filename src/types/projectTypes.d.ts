@@ -14,6 +14,7 @@ export interface ProjectSlug {
     title: string;
     pageId: string;
     type: Array<string>;
+    date: string;
     projectNum: number;
 }
 

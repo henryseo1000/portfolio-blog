@@ -1,28 +1,28 @@
 'use client';
 
 import projectsList from "@/data/project";
-import { RootState } from "@/store";
+
 import { PageNavProps } from "@/types/navTypes";
 import { cn } from "@/utils/cn";
-
-import { Command, Search, X } from "lucide-react";
+import { Command, Menu, Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+import SearchPalette from "./SearchPalette";
+import MenuDrawer from "../projects/MenuDrawer";
 
 function PageNav() {
     const [menus, setMenus] = useState<PageNavProps[]>([]);
     const [focused, setFocused] = useState<number>();
     const [open, setOpen] = useState<boolean>(false);
-    const [searchInput, setSearchInput] = useState<string>("");
-    const [filteredList, setFilteredList] = useState<any[]>([]);
+    const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
     const searchParams = useSearchParams();
     const location = usePathname();
     const router = useRouter();
     
     const dialogRef = useRef<HTMLDialogElement>();
-    const storedData = useSelector((state: RootState) => state.pageData.storeDataList)
+    const drawerRef = useRef<HTMLDivElement>();
 
     const handleLocation = async () => {
         const buf = []
@@ -61,44 +61,18 @@ function PageNav() {
         setMenus(buf);
     }
 
-    const handleKeyboard = (e : KeyboardEvent) => {
-        if(e.metaKey && e.keyCode === 75) {
-            if (dialogRef.current) {
-                if (!open) {
-                    dialogRef.current.showModal();
-                    document.body.classList.add('overflow-hidden');
-                }
-                else {
-                    setOpen(!open);
-                    setTimeout(() => {
-                        dialogRef.current.close();
-                        document.body.classList.remove('overflow-hidden');
-                    }, 300)
-                }
-            }
-            setOpen(!open);
-        }
-    }
-
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyboard, false);
-
-        return () => window.removeEventListener('keydown', handleKeyboard, false);
-    }, [open])
-
     useEffect(() => {
         handleLocation();
     }, [location])
 
-    useEffect(() => {
-        setFilteredList(storedData.filter((item) => {
-            return item?.title?.toLowerCase().replace(' ', '').includes(searchInput)
-        }))
-    },[searchInput])
-
     return (
         <div className='flex fixed items-center justify-between top-0 w-full h-[75px] px-[30px] border-b-[0.5px] border-b-[var(--background-basic-light)] bg-[rgba(0,0,0,0.2)] backdrop-blur-3xl z-10'>
             <div className="flex items-center gap-[5px]">
+                <Menu
+                    className="cursor-pointer"
+                    onClick={() => {setDrawerOpen(!drawerOpen)}}
+                    width={17}
+                />
                 {
                     menus?.map((item, index) => {
                         if (index === menus.length - 1) {
@@ -140,7 +114,7 @@ function PageNav() {
             </div>
 
             <div 
-                className="flex gap-[10px] text-[var(--border-light-dark)] cursor-pointer hover:text-[var(--foreground-rgb)] [&:hover>div]:border-[var(--foreground-rgb)] duration-100"
+                className="flex gap-[5px] text-[var(--border-light-dark)] cursor-pointer hover:text-[var(--foreground-rgb)] [&:hover>div]:border-[var(--foreground-rgb)] duration-100"
                 onClick={() => {
                     if (dialogRef.current) {
                         if (!open) {
@@ -158,66 +132,23 @@ function PageNav() {
                     }
                 }}
             >
-                <Search width={15}/>
-                <div className="flex items-center px-[5px] gap-[5px] border-[0.5px] border-[var(--border-light-dark)] rounded-[3px]">
-                    <Command width={12} />
-                    <p className="text-[12px]">+ K</p>
+                <Search width={20} strokeWidth={1}/>
+                <div className="flex items-center justify-center px-[5px] gap-[5px] border-[0.5px] border-[var(--border-light-dark)] rounded-[3px]">
+                    <p className="text-[12px]">Cmd+K</p>
+                    <p className="text-[12px]">or</p>
+                    <p className="text-[12px]">Ctl+K</p>
                 </div>
             </div>
-            <dialog 
-                className={cn("w-[70%] h-[400px] top-[-200%] border-[0.5px] border-[var(--border-light-dark)] rounded-[20px] bg-[rgba(255,255,255,0.1)] backdrop-blur-xl duration-300 overflow-hidden outline-none focus:outline-none", open && "top-[none] backdrop:bg-black/50")}
+            <SearchPalette
                 ref={dialogRef}
-            >   
-                <div>
-                    <input
-                        className="w-full h-[60px] px-[30px] text-[20px] text-[var(--foreground-rgb)] border-b-[0.5px] border-[var(--border-light-dark)] bg-transparent outline-none focus:outline-none"
-                        type="text"
-                        placeholder="검색할 내용을 입력하세요..."
-                        onChange={(e) => {
-                            setSearchInput(e.target.value)
-                        }}
-                        value={searchInput}
-                    />
-                    <div
-                        className="flex flex-col w-full h-[340px] overflow-scroll"
-                    >
-                        {filteredList.map((item, index) => {
-                            return(
-                                <p
-                                    className="flex w-full px-[30px] py-[15px] text-[var(--border-light)] duration-300 select-none cursor-pointer hover:bg-[var(--border-dark)]"
-                                    key={index}
-                                    onClick={() => {
-                                        router.push('/projects' + "/1/" + item?.pageId + '?title=' + item?.title);
-                                        if(dialogRef.current) {
-                                            setOpen(!open);
-                                            setTimeout(() => {
-                                                dialogRef.current.close();
-                                                document.body.classList.remove('overflow-hidden');
-                                            }, 300)
-                                        }
-                                    }}
-                                >
-                                    {item?.title}
-                                </p>
-                            )
-                        })}
-                    </div>
-                </div>
-                <button
-                    className=""
-                    onClick={() => {
-                        if(dialogRef.current) {
-                            setOpen(!open);
-                            setTimeout(() => {
-                                dialogRef.current.close();
-                                document.body.classList.remove('overflow-hidden');
-                            }, 300)
-                        }
-                    }}
-                >
-                    <X className="absolute top-[17px] right-[17px] text-[var(--foreground-rgb)] duration-300 opacity-50 hover:opacity-100"/>
-                </button>
-            </dialog>
+                open={open}
+                setOpen={setOpen}
+            />
+            <MenuDrawer
+                ref={drawerRef}
+                open={drawerOpen}
+                setOpen={setDrawerOpen}
+            />
         </div>
     )
 }
