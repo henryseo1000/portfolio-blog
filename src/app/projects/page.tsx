@@ -5,12 +5,6 @@ import { ProjectSource } from "@/types/projectTypes";
 import generateGraphData from "@/utils/generateGraphData";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: 'Dots - Projects',
-  description: 'My projects with graph view',
-}
-
-
 export default async function Projects() {
     const projectSource : ProjectSource = await allPagesForProject();
     const graphData = generateGraphData(projectSource);

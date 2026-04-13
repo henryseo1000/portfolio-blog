@@ -31,14 +31,14 @@ function MenuDrawer({ ref, open, setOpen } : MenuDrawerProps) {
 
     return (
         <div 
-            className={cn('flex fixed items-center left-0 w-[300px] h-screen px-[20px] py-[50px] bg-[rgba(0,0,0,0.8)] backdrop-blur-xl duration-300 translate-y-[calc(50%-40px)] translate-x-[-105%]', open && "translate-x-[0%]")}
+            className={cn('flex fixed items-center left-0 w-[300px] h-screen px-[20px] py-[50px] bg-[rgba(0,0,0,0.7)] backdrop-blur-xl duration-300 translate-y-[calc(50%-40px)] translate-x-[-105%]', open && "translate-x-[0%]")}
             ref={ref}
         >
             <X className='absolute top-[25px] right-[25px] cursor-pointer'
                 onClick={() => setOpen(false)}
             />
 
-            <div className='flex flex-col items-center justify-center w-[calc(100%_-_20px)] gap-[20px] text-[15px] '>
+            <div className='flex flex-col items-center justify-center w-[calc(100%_-_20px)] gap-[25px] text-[13px] '>
                 <div 
                     className={cn('flex gap-[5px] text-[var(--border-light)] select-none cursor-pointer hover:text-[var(--foreground-rgb)]', focused === 'main' && "text-[var(--foreground-rgb)]")}
                     onClick={() => {

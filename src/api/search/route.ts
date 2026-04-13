@@ -373,7 +373,6 @@ export async function allPagesForProject() {
                         'relation': {'contains' : projectsList[i]?.uuid}
                     }
                 })
-                console.log(response)
                 
                 return response;
             }

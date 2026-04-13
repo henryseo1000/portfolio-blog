@@ -72,7 +72,7 @@ function SearchPalette({ ref, open, setOpen } : SearchPaletteProps) {
 
     return (
         <dialog 
-            className={cn("w-[70%] h-[400px] top-[-200%] border-[0.5px] border-[var(--border-light-dark)] rounded-[20px] bg-[rgba(255,255,255,0.1)] backdrop-blur-xl duration-300 overflow-hidden outline-none focus:outline-none", open && "top-[none] backdrop:bg-black/50")}
+            className={cn("w-[70%] h-[400px] top-[-200%] border-[0.5px] border-[var(--border-light-dark)] rounded-[20px] bg-[rgba(255,255,255,0.1)] backdrop-blur-xl duration-300 overflow-hidden outline-none focus:outline-none", open && "top-[none] backdrop:bg-black/80")}
             ref={ref}
         >   
             <div>
@@ -104,20 +104,19 @@ function SearchPalette({ ref, open, setOpen } : SearchPaletteProps) {
                                             }
                                         }}
                                     >   
-                                        <div
-                                            className='flex flex-col'
-                                        >
-                                            <p
-                                                className="select-none"
-                                            >
-                                                {item?.title}
-                                            </p>
-                                            <p className='text-[12px]'>{item?.date}</p>
+                                        <div className='flex flex-col'>
+                                            <p className="select-none">{item?.title}</p>
+                                            <p className='text-[12px] font-light'>{item?.date}</p>
                                         </div>
                                         
-                                        <p className='px-[10px] py-[3px] text-[15px] bg-[var(--border-light-dark)] rounded-[5px]'>
-                                            {item?.type}
-                                        </p>
+                                        <div className='flex gap-[5px]'>
+                                            {   (item?.type && item?.type?.map)
+                                                ?
+                                                item?.type.map((item, index) => {return <p className='px-[10px] py-[3px] text-[13px] bg-[var(--border-light-dark)] rounded-[5px]' key={index}>{item}</p>})
+                                                :
+                                                <p className='px-[10px] py-[3px] text-[13px] bg-[var(--border-light-dark)] rounded-[5px]'>{item.type}</p>
+                                            }
+                                        </div>
                                     </div>
                                 )
                             })}
