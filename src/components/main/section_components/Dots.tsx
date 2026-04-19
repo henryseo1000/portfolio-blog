@@ -36,21 +36,17 @@ function Dots() {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-        if (e.clientX < window.innerWidth / 2) {
-            setX(Math.PI / 2 + (e.clientX - window.innerWidth / 2) / 1500);
-        }
-        else {
-            setX(Math.PI / 2 - (e.clientX - window.innerWidth / 2) / 1500)
-        }
+        setY(Math.PI / 2 + (e.clientX - window.innerWidth / 2) / 1500);
+        setX(Math.PI / 2 + (e.clientY - window.innerHeight / 2) / 1500);
     }
 
     const handleScroll = (e: MouseEvent) => {
-        window
+
     }
 
     useFrame(({ clock }) => {
         if (myMesh.current) {
-            myMesh.current.rotation.z = clock.elapsedTime * 0.3
+            myMesh.current.rotation.z = clock.elapsedTime * 0.2
         }
     })
 

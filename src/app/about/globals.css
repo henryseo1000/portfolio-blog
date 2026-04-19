@@ -1,3 +1,27 @@
 body {
     background-color: var(--background-basic);
 }
+
+.waiting {
+    transform: translateX(-200%);
+}
+
+.card0 {
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.card2 {
+    transform: translate(-50%, -50%) rotate(2deg);
+}
+
+.card3 {
+    transform: translate(-50%, -50%) rotate(4deg);
+}
+
+.card4 {
+    transform: translate(-50%, -50%) rotate(6deg);
+}
+
+.card5 {
+    transform: translate(-50%, -50%) rotate(8deg);
+}

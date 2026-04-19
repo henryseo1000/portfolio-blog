@@ -83,9 +83,6 @@ function SkillSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
         className='flex w-[70%]'
       >
         <Swiper
-          style={{
-            
-          }}
           slidesPerView={1}
           pagination ={{clickable: true}}
           autoplay={{

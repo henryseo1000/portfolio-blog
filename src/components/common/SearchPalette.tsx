@@ -4,9 +4,8 @@ import { RootState } from '@/store';
 import { cn } from '@/utils/cn'
 import { X } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { Dispatch, LegacyRef, MutableRefObject, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { div } from 'three/src/nodes/math/OperatorNode.js';
 
 interface SearchPaletteProps {
     ref : MutableRefObject<HTMLDialogElement>

@@ -10,14 +10,17 @@ import { cn } from "@/utils/cn";
 import { postCategoryList } from '@/data/postCategory';
 import { useRouter } from 'next/navigation';
 import { NavProps } from '@/types/navTypes';
-import { Info, InfoIcon, SquareArrowOutUpRight } from 'lucide-react';
+import { Info, X } from 'lucide-react';
+import { releaseScroll, scrollLock } from '@/utils/scrollLock';
 
 function MainNav({ menuList } : { menuList : NavProps[]}) {
     const [focusedMenu, setFocusedMenu] = useState<number>(0); 
     const [scrollPos, setScrollPos] = useState<number>(0);
     const [change, setChange] = useState<boolean>(false);
     const [isTriggered, setTriggered] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(false);
     const ref = useRef<HTMLDivElement>(null);
+    const infoRef = useRef<HTMLDialogElement>(null);
 
     const router = useRouter();
 
@@ -82,7 +85,21 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
                     })}
                 </div>
 
-                <button className={cn("flex items-center justify-center px-[12px] py-[8px] gap-[5px] text-[var(--background-plain)] rounded-[10px] bg-[var(--foreground-rgb)] duration-300 hover:opacity-70", change && "text-[var(--foreground-rgb)] bg-[var(--background-plain)]")}>
+                <button 
+                    className={cn("flex items-center justify-center px-[12px] py-[8px] gap-[5px] text-[var(--background-plain)] rounded-[10px] bg-[var(--foreground-rgb)] duration-300 hover:opacity-70", change && "text-[var(--foreground-rgb)] bg-[var(--background-plain)]")}
+                    onClick={() => {
+                        if (infoRef.current) {
+                            if (open) {
+                                infoRef.current.close();
+                                releaseScroll();
+                            }
+                            else {
+                                infoRef.current.showModal();
+                                scrollLock();
+                            }
+                        }
+                    }}
+                >
                     <p className='text-[15px]'>Page Info</p>
                     <Info height={17}/>
                 </button>
@@ -117,6 +134,32 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
                 })}
                 </div>
             </div>
+
+            <dialog className='w-[70%] h-[350px] px-[20px] py-[30px] rounded-[15px]' ref={infoRef} open={open}>
+                <div className='flex flex-col w-full gap-[35px]'>
+                    <div className=''>
+                        <p>About</p>
+                        <p></p>
+                    </div>
+
+                    <div className=''>
+                        <p>About</p>
+                        <p></p>
+                    </div>
+
+                    <div className=''>
+                        <p>About</p>
+                        <p></p>
+                    </div>
+                </div>
+                <X 
+                    className='absolute top-[20px] right-[20px] cursor-pointer'
+                    onClick={() => {
+                        infoRef.current.close();
+                        releaseScroll();
+                    }}
+                />
+            </dialog>
         </div>
     )
 }

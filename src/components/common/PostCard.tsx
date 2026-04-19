@@ -1,8 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { isTypedArray } from 'util/types';
-
 interface PostCardProps {
     type?: any;
     pageId?: string; 

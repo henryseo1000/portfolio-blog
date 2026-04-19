@@ -4,7 +4,7 @@ import projectsList from "@/data/project";
 
 import { PageNavProps } from "@/types/navTypes";
 import { cn } from "@/utils/cn";
-import { Command, Menu, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
