@@ -12,7 +12,7 @@ function ProjectSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
     <div ref={ref} className='flex flex-col justify-center w-screen h-screen px-[100px] py-[200px] gap-[50px] bg-[var(--background-plain)]'>
       <p 
         data-aos="fade-top"
-        className='text-[48px] font-extrabold'
+        className='text-[48px] font-extrabold select-none'
       >
         Projects
       </p>

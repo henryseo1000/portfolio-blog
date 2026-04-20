@@ -13,7 +13,7 @@ function PostCard({ type, pageId, date, thumbnailPath, title, path } : PostCardP
 
     return (
         <a
-            className='flex flex-col relative justify-center w-full h-[275px] text-[18px] font-semibold border-[0.5px] border-[#4C4C4C] bg-[#393939] rounded-[10px] duration-300 overflow-hidden hover:opacity-50'
+            className='flex flex-col relative justify-center w-full h-[275px] text-[18px] font-semibold border-[0.5px] border-[#4C4C4C] bg-[#393939] rounded-[10px] duration-300 overflow-hidden hover:opacity-50 hover:scale-105'
             href={path + `?title=${title}`}
         >
             <img

@@ -31,7 +31,7 @@ function MenuDrawer({ ref, open, setOpen } : MenuDrawerProps) {
 
     return (
         <div 
-            className={cn('flex fixed items-center left-0 w-[300px] h-screen px-[20px] py-[50px] bg-[rgba(0,0,0,0.7)] backdrop-blur-xl duration-300 translate-y-[calc(50%-40px)] translate-x-[-105%]', open && "translate-x-[0%]")}
+            className={cn('flex fixed items-center left-0 w-[300px] h-screen px-[20px] py-[50px] bg-[rgba(0,0,0,0.7)] backdrop-blur-xl duration-300 translate-y-[calc(50%-37.5px)] translate-x-[-105%]', open && "translate-x-[0%]")}
             ref={ref}
         >
             <X className='absolute top-[25px] right-[25px] cursor-pointer'

@@ -135,21 +135,42 @@ function MainNav({ menuList } : { menuList : NavProps[]}) {
                 </div>
             </div>
 
-            <dialog className='w-[70%] h-[350px] px-[20px] py-[30px] rounded-[15px]' ref={infoRef} open={open}>
-                <div className='flex flex-col w-full gap-[35px]'>
-                    <div className=''>
-                        <p>About</p>
-                        <p></p>
+            <dialog className='relative w-[70%] px-[35px] py-[30px] rounded-[15px]' ref={infoRef} open={open}>
+                <div className='flex flex-col w-full max-h-[320px] gap-[35px] overflow-y-scroll'>
+                    <div>
+                        <p className='text-[var(--background-plain)] text-[20px] font-bold'>웹페이지 소개</p>
+                        <p className='text-[var(--background-plain)] text-[15px]'>
+                            안녕하세요! 제 포트폴리오 페이지에 오신 것을 환영합니다!<br/>여기는 제가 만들고 싶었던 컨셉 몇 개를 모아 만든 곳입니다.<br/>다양한 시도를 해보고 싶어서, 일부러 UI가 페이지(루트)마다 일관적이지 않도록 만들었습니다.
+                        </p>
                     </div>
 
-                    <div className=''>
-                        <p>About</p>
-                        <p></p>
+                    <div>
+                        <p className='text-[var(--background-plain)] text-[20px] font-bold'>메인 페이지(/)</p>
+                        <p className='text-[var(--background-plain)] text-[15px]'>
+                            먼저 IntroSection은 three.js를 간단하게 사용하였고, EventListener를 통해 우주 속 각기 다른 점들이 움직이는 것을 표현했습니다.<br/>
+                            내리면 섹션에 따라 저에 대한 간단한 정보들을 얻을 수 있게 구상하였습니다.
+                        </p>
                     </div>
 
-                    <div className=''>
-                        <p>About</p>
-                        <p></p>
+                    <div>
+                        <p className='text-[var(--background-plain)] text-[20px] font-bold'>About 페이지(/about)</p>
+                        <p className='text-[var(--background-plain)] text-[15px]'>
+                            명함과 Tinder의 Swipe UI에 영감을 받아 만들었습니다.<br/>다른 사람에게 소개할 때 회사원들이 명함을 보여주는 모습이 멋지다고 생각했는데, 아직 명함을 가지지 못해서 저를 소개하는 페이지 속에 구현해보고 싶었습니다.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className='text-[var(--background-plain)] text-[20px] font-bold'>Projects 페이지(/projects)</p>
+                        <p className='text-[var(--background-plain)] text-[15px]'>
+                            노션의 프로젝트 과정을 저장해 놓은 페이지들을 불러와 간단한 Overview 그래프를 띄워줍니다.<br/>여기는 제가 만들고 싶었던 컨셉 몇 개를 모아 만든 곳입니다.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className='text-[var(--background-plain)] text-[20px] font-bold'>Posts 페이지(/posts)</p>
+                        <p className='text-[var(--background-plain)] text-[15px]'>
+                            노션의 데이터베이스에서 정리해놓은 글들을 가져와 Post 페이지에 띄워줍니다.<br/>제가 평소에 보던 블로그와 같은 모습을 최대한 구현하고 싶어서 UI 요소들을 둥글둥글하게 디자인하였고, 댓글은 Utterances를 사용했습니다.
+                        </p>
                     </div>
                 </div>
                 <X 

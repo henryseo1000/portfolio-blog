@@ -1,9 +1,8 @@
 'use client';
 
-import copyToClipBoard from "@/utils/copyToClipboard";
-import handleDownload from "@/utils/download";
-import { CopyIcon, InfoIcon } from "lucide-react";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import Introduction from "@/components/about/Introduction";
+import Motto from "@/components/about/Motto";
+import { useEffect, useState } from "react";
 
 export default function About() {
   const [data, setData] = useState<string[]>(["card0", "card1", "card2", "card3", "card4"]);
@@ -87,59 +86,13 @@ export default function About() {
 
   return (
     <div className="w-screen h-screen overflow-hidden">
+
       <div className="flex absolute w-full top-[50%] left-[50%] items-center justify-center translate-x-[-50%] translate-y-[-50%]">
-        {stack.map((item, index) => {
 
-          return (
-              <div 
-                className={`${item} flex flex-col justify-center absolute top-[50%] left-[50%] w-[50%] aspect-[7/4] p-[50px] gap-[30px] border-[1px] rounded-[10px] bg-[var(--foreground-rgb)] duration-200 shadow-lg translate-x-[-50%] translate-y-[-50%] rotate-[1deg] select-none`}
-                key={index}
-              >
-                <div className="flex items-center gap-[10px] text-[var(--background-basic)] text-[25px] font-bold">
-                  <InfoIcon/>
-                  <p>INTRODUCTION</p>
-                </div>
-                <div className="flex justify-between w-full">
-                  <div className="flex flex-col">
-                    <p className="text-[var(--background-basic)] text-[20px]">서호준 HOJUN SEO</p>
-                    <p className="text-[var(--background-basic)] text-[15px] font-thin">Software Engineer</p>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-center gap-[5px] text-[var(--background-basic)] text-[15px]">
-                      <p>E-mail1 : henryseo1000@gmail.com</p>
-                      <CopyIcon 
-                        className="opacity-50 cursor-pointer" 
-                        height={15}
-                        onClick={() => {
-                          copyToClipBoard("henryseo1000@gmail.com")
-                        }}
-                      />
-                    </div>
+        <Introduction/>
+        <Motto/>
 
-                    <div className="flex items-center justify-center gap-[5px] text-[var(--background-basic)] text-[15px]">
-                      <p>E-mail2 : henryseo1000@naver.com</p>
-                      <CopyIcon 
-                        className="opacity-50 cursor-pointer" 
-                        height={15}
-                        onClick={() => {
-                          copyToClipBoard("henryseo1000@naver.com")
-                        }}
-                      />
-                    </div>
 
-                    <button
-                      className="bg-[var(--background-basic)]"
-                      onClick={() => {
-                        handleDownload("/files/정보처리산업기사_자격증.pdf", "서호준_자격증.pdf")
-                      }}
-                    >
-                      자격증 테스트
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
       </div>
     </div>
   )

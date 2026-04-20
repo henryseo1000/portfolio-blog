@@ -86,7 +86,7 @@ function SkillSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
           slidesPerView={1}
           pagination ={{clickable: true}}
           autoplay={{
-            disableOnInteraction: false,
+            disableOnInteraction: true,
           }}
           speed={1500}
         >

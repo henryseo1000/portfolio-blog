@@ -33,19 +33,26 @@ export default async function BlogPost({ params }) {
     else if (!slug.postRoute[1]){
         return (
             <div className='flex flex-col h-screen px-[30px] pt-[15px] pb-[50px] gap-[40px]'>
-                <div className='flex flex-col gap-[5px]'>
-                    <div className='flex w-[80%] text-[var(--foreground-rgb)] text-[30px] font-extrabold gap-[10px]'>
-                        <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
-                        <p>관련 포스트 조회 결과</p>
+                <div className='flex justify-between'>
+                    <div className='flex flex-col w-fit gap-[5px]'>
+                        <div className='flex text-[var(--foreground-rgb)] text-[30px] font-extrabold gap-[10px]'>
+                            <p className='text-transparent [-webkit-text-stroke:1px_var(--foreground-rgb)]'>{slug.postRoute[0]}</p>
+                            <p>관련 포스트 조회 결과</p>
+                        </div>
+
+                        <div className='flex items-center text-[var(--border-light)]'>
+                            <Clipboard height={12}/>
+                            <p className='text-[12px] font-light'>
+                                Total Posts found : {source.totalNum}
+                            </p>  
+                        </div>
                     </div>
 
-                    <div className='flex items-center text-[var(--border-light)]'>
-                        <Clipboard height={12}/>
-                        <p className='text-[12px] font-light'>
-                            Total Posts found : {source.totalNum}
-                        </p>  
+                    <div>
+
                     </div>
                 </div>
+                
                 
                 <div className='grid grid-cols-3 pb-[50px] gap-[30px]'>
                     {

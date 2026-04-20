@@ -43,7 +43,7 @@ function AboutSection({ref} : {ref: MutableRefObject<HTMLDivElement>}) {
         <div data-aos="fade-top" className='flex w-full h-full items-center justify-between'>
           <div className='flex flex-col items-center justify-center w-full h-full gap-[30px]'>
             <img
-              className='max-w-[300px] rounded-[10px]'
+              className='max-w-[300px] aspect-square rounded-[50%] object-cover object-top'
               src="/profile_1.jpg"
               alt="profile_1"
             />

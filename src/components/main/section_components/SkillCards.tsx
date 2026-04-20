@@ -1,5 +1,6 @@
 import { SkillTypes } from '@/types/skillTypes';
 import SkillArrow from '../../../../public/svg/skillArrow.svg'
+import { div } from 'three/src/nodes/math/OperatorNode.js';
 
 function SkillCards({name, skill_level, svg, description, onClick} : SkillTypes) {
 
@@ -18,23 +19,21 @@ function SkillCards({name, skill_level, svg, description, onClick} : SkillTypes)
     }
 
     return (
-        <div 
-            className='flex justify-between w-[240px] h-[160px] px-[20px] py-[10px] border-[0.5px_solid_var(--border-light)] rounded-[10px] bg-[var(--foreground-rgb)] select-none cursor-pointer'
-            onClick={onClick ? onClick : () => {}}
-        >
-            <div className='flex flex-col justify-center gap-[5px]'>
-                <div className='flex items-center gap-[5px]'>
-                    {svg}
-                    <span className='text-[var(--background-plain)] text-[20px] font-extrabold'>{name}</span>
-                </div>
+        <div className='card_container relative w-[240px] h-[160px]'>
+            <div 
+                className='card_front flex flex-col items-center justify-center gap-[10px] px-[20px] py-[10px] border-[0.5px_solid_var(--border-light)] rounded-[10px] bg-[var(--foreground-rgb)] select-none'
+                onClick={onClick ? onClick : () => {}}
+            >
+                    <div className='flex items-center gap-[5px]'>
+                        {svg}
+                        <span className='text-[var(--background-plain)] text-[20px] font-extrabold'>{name}</span>
+                    </div>
 
-                {generateTag()}
-
-                <p className='text-[var(--border-light)] text-[14px]'>{description}</p>
+                    {generateTag()}
             </div>
 
-            <div className='flex items-center h-full'>
-                <SkillArrow />
+            <div className='card_back flex items-center justify-center px-[20px] py-[10px] bg-[var(--foreground-rgb)] rounded-[10px] select-none'>
+                <p className='text-center text-[var(--border-light)] text-[14px] break-keep'>{description}</p>
             </div>
         </div>
     )
