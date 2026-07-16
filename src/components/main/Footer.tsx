@@ -110,14 +110,14 @@ function Footer() {
   }
 
   return (
-    <div className='flex relative justify-center w-screen h-[300px] bg-[#ffffff]'>
+    <div className='flex relative justify-center w-screen h-[300px] bg-[#222222]'>
         <canvas className='w-full h-full' width={"100%"} height={"100%"} ref={canvasRef}></canvas>
         <div className='flex flex-col absolute items-center justify-center w-full h-full px-[40px] gap-[10px]'>
           <div/>
 
-          <div className='w-full h-[1px] bg-[var(--background-light)]'/>
+          <div className='w-full h-[1px] bg-[var(--border-light)]'/>
 
-          <div className='flex flex-col items-center justify-center w-full text-[14px] text-[var(--background-light)]'>
+          <div className='flex flex-col items-center justify-center w-full text-[14px] text-[var(--border-light)]'>
             <p >Copyright @ 2026 by henryseo1000. All rights reserved.</p>
             <p>Created by @서호준,  Powered by @서호준</p>
           </div>

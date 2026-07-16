@@ -24,7 +24,7 @@ export default function PageLayout({
 
   return (
     <Provider store={store}>
-      <section className={cn(isMini ? "pt-[15px] pl-[110px]" : "pt-[15px] pl-[280px]")}>
+      <section className={cn(isMini ? "p-[15px] pl-[110px]" : "p-[15px] pl-[280px]")}>
         <ProgressBar position="top"/>
         <Navbar isMinimized={isMini} setIsMinimized={setIsMini}/>
         <Suspense>
