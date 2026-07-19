@@ -26,8 +26,9 @@ export default function About() {
   const handleMouseMove = (e : MouseEvent) => {
     const focusedElement = document.getElementsByClassName(data[focusedIdx]);
     const {clientX, clientY} = e;
-    setOffsetX(clientX - startX)
-    setOffsetY(clientY - startY)
+
+    setOffsetX(clientX - startX);
+    setOffsetY(clientY - startY);
 
     if (focusedElement[0]) {
       if (offsetX !== null && offsetY !== null) {
@@ -42,43 +43,43 @@ export default function About() {
     if(focusedElement[0]) {
       if (offsetX > 300) {
         (focusedElement[0] as HTMLElement).style.transform = `translate(250%, 0%) rotate(90deg)`;
-        
+
         setFocusedIdx((prev) => {
             if (prev === 0) {
-              return data.length - 1
+              return data.length - 1;
             }
-            return prev - 1
+            return prev - 1;
         });
 
         setStack((prev) => {
-          return stack.slice(0, prev.length - 1)
+          return stack.slice(0, prev.length - 1);
         });
 
         setTimeout(() => {
           (focusedElement[0] as HTMLElement).style.display = 'none';
-        }, 1000);
+        }, 100);
       }
       else if (offsetX < -300) {
         (focusedElement[0] as HTMLElement).style.transform = `translate(-250%, 0%) rotate(-90deg)`;
 
         setFocusedIdx((prev) => {
           if (prev === 0) {
-            return data.length - 1
+            return data.length - 1;
           }
-          return prev - 1
+          return prev - 1;
         });
 
         setStack((prev) => {
-          return stack.slice(0, prev.length - 1)
+          return stack.slice(0, prev.length - 1);
         });
 
         setTimeout(() => {
           (focusedElement[0] as HTMLElement).style.display = 'none';
-        }, 1000);
+        }, 100);
         
       }
       else {
-        (focusedElement[0] as HTMLElement).style.transform = `translate(-50%, -50%) rotate(${(focusedIdx) * 2}deg)`
+        (focusedElement[0] as HTMLElement).style.transform = `translate(-50%, -50%) rotate(${(focusedIdx) * 2}deg)`;
       }
     }
     
@@ -89,15 +90,14 @@ export default function About() {
   }
 
   const reset = () => {
-    setStack([...data]);
-
-    data.forEach((element, index) => {
-      const focusedElement = document.getElementsByClassName(element);
-      (focusedElement[0] as HTMLElement).style.transform = `translate(-50%, -50%) rotate(${(index) * 2}deg)`;
+    data.forEach((className, index) => {
+      const focusedElement = document.getElementsByClassName(className);
       (focusedElement[0] as HTMLElement).style.display = 'flex';
+      (focusedElement[0] as HTMLElement).style.transform = `translate(-50%, -50%) rotate(${(index) * 2}deg)`;
     })
 
-    setFocusedIdx(data.length - 1)
+    setStack([...data]);
+    setFocusedIdx(data.length - 1);
   }
 
   useEffect(() => {

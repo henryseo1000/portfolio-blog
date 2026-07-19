@@ -11,18 +11,18 @@ body {
     transform: translate(-50%, -50%) rotate(0deg);
 }
 
-.card2 {
+.card1 {
     transform: translate(-50%, -50%) rotate(2deg);
 }
 
-.card3 {
+.card2 {
     transform: translate(-50%, -50%) rotate(4deg);
 }
 
-.card4 {
+.card3 {
     transform: translate(-50%, -50%) rotate(6deg);
 }
 
-.card5 {
+.card4 {
     transform: translate(-50%, -50%) rotate(8deg);
 }
