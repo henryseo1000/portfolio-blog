@@ -10,7 +10,7 @@ function Cursor() {
         }
 
         if (bigDivRef.current && bigDivRef) {
-            bigDivRef.current.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
+            bigDivRef.current.style.transform = `translate(${e.clientX - 25}px, ${e.clientY - 25}px)`;
         }
     }
 
@@ -23,10 +23,10 @@ function Cursor() {
 
     return (
         <>
-            <div className='fixed w-[10px] h-[10px] rounded-[50%] bg-[#ffffff] pointer-events-none z-[999]' ref={smallDivRef}>
+            <div className='fixed w-[10px] h-[10px] rounded-[50%] bg-[#d8d8d8] pointer-events-none z-[999]' ref={smallDivRef}>
             
             </div>
-            <div className='fixed w-[40px] h-[40px] rounded-[50%] bg-[#ffffff] opacity-[30%] duration-100 pointer-events-none z-[999]' ref={bigDivRef}>
+            <div className='fixed w-[50px] h-[50px] border-[0.5px] rounded-[50%] bg-[#d8d8d833] duration-[50ms] pointer-events-none z-[999]' ref={bigDivRef}>
         
             </div>
         </>

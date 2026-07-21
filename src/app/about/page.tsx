@@ -6,6 +6,7 @@ import Introduction from "@/components/about/Introduction";
 import Motto from "@/components/about/Motto";
 import Skills from "@/components/about/Skills";
 import { Home, RotateCcw, Undo2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function About() {
@@ -16,6 +17,7 @@ export default function About() {
   const [offsetY, setOffsetY] = useState<number>();
   const [focusedIdx, setFocusedIdx] = useState<number>(data.length - 1);
   const [stack, setStack] = useState(data);
+  const router = useRouter();
 
   const handleMouseDown = (e : MouseEvent) => {
     const {clientX, clientY} = e;
@@ -146,7 +148,7 @@ export default function About() {
           <Undo2 size={25}/>
         </button>
 
-        <button onClick={() => {navigation.navigate('/')}} className="flex items-center justify-center p-[5px] rounded-lg border-[#ffffff] border-[1px] duration-[0.5s] cursor-pointer hover:opacity-50">
+        <button onClick={() => {router.push('/')}} className="flex items-center justify-center p-[5px] rounded-lg border-[#ffffff] border-[1px] duration-[0.5s] cursor-pointer hover:opacity-50">
           <Home size={25}/>
         </button>
 

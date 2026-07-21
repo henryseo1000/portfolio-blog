@@ -7,6 +7,9 @@ function Skills() {
           <Monitor/>
           <p>SKILLS</p>
         </div>
+        <div>
+          
+        </div>
     </div>
   )
 }
