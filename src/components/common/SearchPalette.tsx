@@ -93,7 +93,7 @@ function SearchPalette({ ref, open, setOpen } : SearchPaletteProps) {
                                         className='flex items-center justify-between w-full px-[30px] py-[15px] text-[var(--border-light)] duration-300 hover:bg-[var(--border-dark)] cursor-pointer'
                                         key={index}
                                         onClick={() => {
-                                            router.push(location.split('/')[1] === "projects" ? 'projects/' + item?.projectNum + '/' + item?.pageId + '?title=' + item?.title : item?.type + '/' + item?.pageId);
+                                            router.push(location.split('/')[1] === "projects" ? item?.projectNum + '/' + item?.pageId + '?title=' + item?.title : item?.type + '/' + item?.pageId);
                                             if(ref.current) {
                                                 setOpen(!open);
                                                 setTimeout(() => {

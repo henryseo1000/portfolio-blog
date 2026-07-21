@@ -14,6 +14,7 @@ import ProjectSection from "@/components/main/ProjectSection";
 import PostSection from "@/components/main/PostSection";
 import CareerSection from "@/components/main/CareerSection";
 import { NavProps } from "@/types/navTypes";
+import Cursor from "@/components/common/Cursor";
 
 export default function Home() {
   const introRef = useRef<HTMLDivElement>(null);
@@ -66,6 +67,7 @@ export default function Home() {
       <ProjectSection ref={projectRef}/>
       <PostSection ref={postRef}/>
       <Footer/>
+      <Cursor/>
     </main>
   );
 }
